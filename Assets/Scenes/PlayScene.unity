@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cd4d7dbcff611744adced1ba4de4a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayButton
-  _buttonSFX: {fileID: 0}
+  _buttonSFX: {fileID: 8300000, guid: 109bb9a335ad88a47b40d91cad0ce70d, type: 3}
   _useUnmutableAudioSource: 0
 --- !u!224 &5649554011600885599
 RectTransform:
