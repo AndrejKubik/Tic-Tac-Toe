@@ -1,0 +1,20 @@
+﻿<Solution>
+  <Project Path="Snek.Utilities.csproj" />
+  <Project Path="SnekEditor.GUIUtilities.csproj" />
+  <Project Path="SnekEditor.ScriptableObjectManager.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Snek.GameUIPlus.csproj" />
+  <Project Path="SnekEditor.AudioManager.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="SnekEditor.GameBootstrapper.csproj" />
+  <Project Path="Snek.PlayModeManager.csproj" />
+  <Project Path="SnekEditor.Utilities.csproj" />
+  <Project Path="Snek.GameBootstrapper.csproj" />
+  <Project Path="Snek.GameUI.csproj" />
+  <Project Path="SnekEditor.GameUI.csproj" />
+  <Project Path="Snek.SingletonManager.csproj" />
+  <Project Path="SnekEditor.PlayModeManager.csproj" />
+  <Project Path="Snek.AudioManager.csproj" />
+  <Project Path="SnekEditor.SingletonManager.csproj" />
+  <Project Path="SnekEditor.GameUIPlus.csproj" />
+</Solution>

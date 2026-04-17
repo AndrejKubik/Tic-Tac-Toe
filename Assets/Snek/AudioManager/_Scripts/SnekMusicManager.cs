@@ -60,6 +60,8 @@ namespace Snek.AudioManager
             _audioSource.volume = _baseVolume;
 
             ClearNullPlaylistTracks();
+
+            StartPlaylist();
         }
 
         private void Update()

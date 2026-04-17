@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: SnekScriptableObjectManagerCache
   m_EditorClassIdentifier: SnekEditor.ScriptableObjectManager::SnekEditor.ScriptableObjectManager.SnekScriptableObjectManagerCache
   GeneratedAssets:
+  - {fileID: 11400000, guid: 2189b2dd46dc4c84eb14224eb60b9f29, type: 2}
+  - {fileID: 11400000, guid: 37dd3c9f768d9db45b7838cb81de0654, type: 2}
   - {fileID: 11400000, guid: bcbaf1a0d54c6ff4a96f35eeadc5e47b, type: 2}
   - {fileID: 11400000, guid: 74851cfe27fe5b2418d3b76d5f9bd1fe, type: 2}
   - {fileID: 11400000, guid: b990ef87a0245584da846a2555025d51, type: 2}
