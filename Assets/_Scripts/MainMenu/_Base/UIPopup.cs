@@ -1,6 +1,5 @@
 using Snek.SingletonManager;
 using Snek.Utilities;
-using UnityEngine;
 
 public abstract class UIPopup : SnekMonoBehaviour
 {

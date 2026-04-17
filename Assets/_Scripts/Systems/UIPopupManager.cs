@@ -6,23 +6,30 @@ using UnityEngine;
 public class UIPopupManager : SnekMonoBehaviour
 {
     [SerializeField] private List<UIPopup> _popupPrefabs = new List<UIPopup>();
+    [SerializeField] private Transform _popupSpawner;
 
     private readonly List<UIPopup> _popups = new List<UIPopup>();
 
-    protected override void Initialize()
-    {
-        foreach (UIPopup popup in _popupPrefabs)
-        {
-            UIPopup popupInstance = Instantiate(popup, transform);
-
-            _popups.Add(popupInstance);
-        }
-    }
-
     protected override void Validate()
     {
-        if (_popups.Count != _popupPrefabs.Count)
-            FailValidation("Some UI Popup instances were not initialized successfully.");
+        if (!_popupSpawner)
+            FailValidation("Popup Spawner transform not assigned.");
+    }
+
+    protected override void OnInitializationSuccess()
+    {
+        foreach (UIPopup prefab in _popupPrefabs)
+        {
+            UIPopup popup = Instantiate(prefab, _popupSpawner);
+
+            popup.name = prefab.name;
+            popup.gameObject.SetActive(false);
+            popup.transform.SetParent(transform, true);
+
+            _popups.Add(popup);
+        }
+
+        Destroy(_popupSpawner.gameObject);
     }
 
     /// <summary>
