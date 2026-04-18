@@ -7,6 +7,9 @@ using UnityEngine.UI;
 [UseSnekInspector]
 public class GameThemeButton : SnekUIButtonWithSFX
 {
+    [SerializeField] private GameTheme _theme;
+
+    [Space(10f)]
     [SerializeField] private Image _symbolX;
     [SerializeField] private Image _symbolO;
 
@@ -27,6 +30,9 @@ public class GameThemeButton : SnekUIButtonWithSFX
 
         if (!_selectionIndicator)
             FailValidation("Selection Indicator not assigned.");
+
+        if (!_theme.IsValid())
+            FailValidation("Invalid Game Theme data assigned.");
     }
 
     public void SetExternalCallback(Action<GameThemeButton> callback)
@@ -41,14 +47,9 @@ public class GameThemeButton : SnekUIButtonWithSFX
         _customExternalCallback.Invoke(this);
     }
 
-    public Sprite GetSpriteX()
+    public GameTheme GetGameTheme()
     {
-        return _symbolX.sprite;
-    }
-
-    public Sprite GetSpriteO()
-    {
-        return _symbolO.sprite;
+        return _theme;
     }
 
     public void ShowSelectionIndicator(bool newState)

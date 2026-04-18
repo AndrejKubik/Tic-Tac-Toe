@@ -1,20 +1,26 @@
+using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
 
 [UseSnekInspector]
-public class ThemeSelection : SnekMonoBehaviour
+public class GameThemeSelection : SnekMonoBehaviour
 {
-    private GameThemeButton[] _themeButtons;
+    private GameThemeManager _themeManager;
 
+    private GameThemeButton[] _themeButtons;
     private GameThemeButton _selectedButton;
 
     protected override void Initialize()
     {
+        _themeManager = SnekSingletonManager.GetSingleton<GameThemeManager>();
         _themeButtons = GetComponentsInChildren<GameThemeButton>();
     }
 
     protected override void Validate()
     {
+        if (!_themeManager)
+            FailValidation("Cannot find Game Theme Manager singleton.");
+
         if (_themeButtons == null || _themeButtons.Length < 1)
             FailValidation("Cannot find any game theme button.");
     }
@@ -33,5 +39,7 @@ public class ThemeSelection : SnekMonoBehaviour
 
         foreach (GameThemeButton theme in _themeButtons)
             theme.ShowSelectionIndicator(theme == _selectedButton);
+
+        _themeManager.SelectTheme(_selectedButton.GetGameTheme());
     }
 }

@@ -289,6 +289,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameThemeButton
   _buttonSFX: {fileID: 8300000, guid: 109bb9a335ad88a47b40d91cad0ce70d, type: 3}
   _useUnmutableAudioSource: 0
+  _theme:
+    BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    SymbolX: {fileID: 2203544323089367195, guid: 67a0f4592f14e5b4da6d94d9498576b0, type: 3}
+    SymbolO: {fileID: -7757478343690205468, guid: 67a0f4592f14e5b4da6d94d9498576b0, type: 3}
   _symbolX: {fileID: 8815159246256987770}
   _symbolO: {fileID: 4457482372036680838}
   _selectionIndicator: {fileID: 8684887100580742329}

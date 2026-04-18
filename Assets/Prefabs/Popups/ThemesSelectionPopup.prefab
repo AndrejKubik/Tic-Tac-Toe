@@ -1039,6 +1039,26 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolO
+      value: 
+      objectReference: {fileID: -7106802376947962716, guid: 67a0f4592f14e5b4da6d94d9498576b0, type: 3}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolX
+      value: 
+      objectReference: {fileID: -4480292283693890404, guid: 67a0f4592f14e5b4da6d94d9498576b0, type: 3}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.BackgroundColor.b
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.BackgroundColor.g
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.BackgroundColor.r
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8815159246256987770, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1165,6 +1185,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolO
+      value: 
+      objectReference: {fileID: -2653751091629521030, guid: 67a0f4592f14e5b4da6d94d9498576b0, type: 3}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolX
+      value: 
+      objectReference: {fileID: 1124370546115290667, guid: 67a0f4592f14e5b4da6d94d9498576b0, type: 3}
     - target: {fileID: 8815159246256987770, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
       propertyPath: m_Sprite
       value: 
