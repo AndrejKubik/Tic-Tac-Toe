@@ -36,6 +36,11 @@ namespace Snek.GameUI
             _externalCallback = callback;
         }
 
+        public void SetExternalCallback<T>(Action<T> callback, T data)
+        {
+            _externalCallback = () => callback(data);
+        }
+
         private void OnButtonClickInternal()
         {
             OnButtonClick();
@@ -46,6 +51,11 @@ namespace Snek.GameUI
         protected virtual void OnButtonClick()
         {
 
+        }
+
+        public void EnableInteraction(bool newState)
+        {
+            _button.interactable = newState;
         }
     }
 }

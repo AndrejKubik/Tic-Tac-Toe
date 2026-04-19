@@ -1,33 +1,27 @@
 using Snek.GameUIPlus;
+using Snek.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
+[UseSnekInspector]
 [RequireComponent(typeof(Image))]
 public class PlacementGridButton : SnekUIButtonWithSFX
 {
-    private Image _image;
+    [SerializeField] private Image _symbol;
 
-    private PlacementGridButtonState _state = PlacementGridButtonState.None;
-
-    protected override void Initialize()
-    {
-        base.Initialize();
-
-        _image = GetComponent<Image>();
-    }
+    public int CellIndex;
+    public PlacementGridButtonState State = PlacementGridButtonState.None;
 
     protected override void Validate()
     {
         base.Validate();
 
-        if (!_image)
-            FailValidation("Image component not found.");
+        if (!_symbol)
+            FailValidation("Symbol Image component not assigned.");
     }
 
-    protected override void OnButtonClick()
+    public void SetSymbolSprite(Sprite sprite)
     {
-        base.OnButtonClick();
-
-        
+        _symbol.sprite = sprite;
     }
 }

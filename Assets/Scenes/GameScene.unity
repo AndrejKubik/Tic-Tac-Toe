@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 288905469}
   - component: {fileID: 288905468}
   - component: {fileID: 288905467}
+  - component: {fileID: 288905470}
   m_Layer: 5
   m_Name: PlacementGrid
   m_TagString: Untagged
@@ -432,6 +433,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288905465}
   m_CullTransparentMesh: 1
+--- !u!114 &288905470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288905465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d11240fbad90c845aa9a0a501ec7fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlacementGrid
 --- !u!1001 &332823527
 PrefabInstance:
   m_ObjectHideFlags: 0

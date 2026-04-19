@@ -1,15 +1,35 @@
 using Snek.Utilities;
 using UnityEngine;
+using UnityEngine.Playables;
 
 [UseSnekInspector]
 public class GameRoundManager : SnekMonoBehaviour
 {
     private PlayerTurn _firstTurn = PlayerTurn.Player1;
-    private PlayerTurn _currentTurn = PlayerTurn.Player1;
 
+    public PlayerTurn CurrentTurn { get; private set; }
     private RoundData _currentRoundData;
 
     private bool _isRoundInProgress = false;
+
+    private static readonly int[][] _cellWinCombos =
+    {
+        // Horizontal Combinations
+        new[] {0, 1, 2},
+        new[] {3, 4, 5},
+        new[] {6, 7, 8},
+
+        // Vertical Combinations
+        new[] {0, 3, 6},
+        new[] {1, 4, 7},
+        new[] {2, 5, 8},
+
+        // Diagonal Combinations
+        new[] {0, 4, 8},
+        new[] {2, 4, 6}
+    };
+
+    private PlacementGridButtonState[] _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
 
     private void Update()
     {
@@ -25,28 +45,54 @@ public class GameRoundManager : SnekMonoBehaviour
             TotalMoves = 0,
         };
 
-        SwitchPlayer(ref _firstTurn);
-
-        _currentTurn = _firstTurn;
+        CurrentTurn = _firstTurn;
 
         _isRoundInProgress = true;
     }
 
-    public void EndTurn()
+    public void EndTurn(int playedCellIndex, PlacementGridButtonState playedCellState)
     {
-        SwitchPlayer(ref _currentTurn);
+        _playingBoard[playedCellIndex] = playedCellState;
+
+        _currentRoundData.TotalMoves++;
+
+        if (IsAnyWinComboAchieved(playedCellState))
+        {
+            FinishRound();
+
+            return;
+        }
+
+        CurrentTurn = GetNextPlayerTurn(CurrentTurn);
     }
 
-    private void SwitchPlayer(ref PlayerTurn turn)
+    private bool IsAnyWinComboAchieved(PlacementGridButtonState playedCellState)
     {
-        if (turn == PlayerTurn.Player1)
-            turn = PlayerTurn.Player2;
-        else
-            turn = PlayerTurn.Player1;
+        foreach (int[] winCombo in _cellWinCombos)
+            if (IsWinComboAchieved(winCombo, playedCellState))
+                return true;
+
+        return false;
+    }
+
+    private bool IsWinComboAchieved(int[] winCombo, PlacementGridButtonState playedCellState)
+    {
+        return _playingBoard[winCombo[0]] == playedCellState
+            && _playingBoard[winCombo[1]] == playedCellState
+            && _playingBoard[winCombo[2]] == playedCellState;
+    }
+
+    private PlayerTurn GetNextPlayerTurn(PlayerTurn playerTurn)
+    {
+        return playerTurn == PlayerTurn.Player1 ? PlayerTurn.Player2 : PlayerTurn.Player1;
     }
 
     public void FinishRound()
     {
         _isRoundInProgress = false;
+
+        _firstTurn = GetNextPlayerTurn(_firstTurn);
+
+        Debug.Log($"{CurrentTurn} wins!");
     }
 }
