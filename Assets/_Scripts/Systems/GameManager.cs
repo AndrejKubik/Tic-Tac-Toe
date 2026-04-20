@@ -1,11 +1,12 @@
 using Snek.PlayModeManager;
+using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [UseSnekInspector]
-public class GameManager : SnekMonoBehaviour
+public class GameManager : SnekMonoSingleton
 {
     [SerializeField] private SceneAsset _gameScene;
     [SerializeField] private SceneAsset _mainMenuScene;

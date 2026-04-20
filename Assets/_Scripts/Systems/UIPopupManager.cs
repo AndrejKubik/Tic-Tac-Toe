@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
 
 [UseSnekInspector]
-public class UIPopupManager : SnekMonoBehaviour
+public class UIPopupManager : SnekMonoSingleton
 {
     [SerializeField] private List<UIPopup> _popupPrefabs = new List<UIPopup>();
     [SerializeField] private Transform _popupSpawner;

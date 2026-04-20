@@ -1,9 +1,9 @@
-﻿using Snek.Utilities;
+﻿using Snek.SingletonManager;
 using UnityEngine;
 
 namespace Snek.AudioManager
 {
-    public class SnekAudioManager : SnekMonoBehaviour
+    public class SnekAudioManager : SnekMonoSingleton
     {
         protected const float DefaultVolume = 0.5f;
 

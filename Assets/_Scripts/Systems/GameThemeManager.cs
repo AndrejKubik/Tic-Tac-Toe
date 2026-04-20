@@ -1,8 +1,9 @@
+using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
 
 [UseSnekInspector]
-public class GameThemeManager : SnekMonoBehaviour
+public class GameThemeManager : SnekMonoSingleton
 {
     [SerializeField] private GameTheme _selectedTheme;
 

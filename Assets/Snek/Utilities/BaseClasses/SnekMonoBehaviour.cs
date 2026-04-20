@@ -13,7 +13,7 @@ namespace Snek.Utilities
 
         protected virtual void Awake()
         {
-            if (IsInitializedInStart())
+            if (IsManuallyInitialized() || IsInitializedInStart())
                 return;
 
             _isValid = true;
@@ -35,7 +35,7 @@ namespace Snek.Utilities
 
         protected virtual void Start()
         {
-            if (!IsInitializedInStart())
+            if (IsManuallyInitialized() || !IsInitializedInStart())
                 return;
 
             _isValid = true;
@@ -60,6 +60,11 @@ namespace Snek.Utilities
         /// <list type="bullet"><c>False</c> = you can completely override <c>Start()</c></list> 
         /// </summary>
         protected virtual bool IsInitializedInStart()
+        {
+            return false;
+        }
+
+        protected virtual bool IsManuallyInitialized()
         {
             return false;
         }
@@ -102,7 +107,7 @@ namespace Snek.Utilities
             Debug.LogError(message);
         }
 
-        private string InvalidSetupMessage(string gameObjectName)
+        protected string InvalidSetupMessage(string gameObjectName)
         {
             return $"Component setup invalid, disabling game object <b>[{gameObjectName}]</b>";
         }

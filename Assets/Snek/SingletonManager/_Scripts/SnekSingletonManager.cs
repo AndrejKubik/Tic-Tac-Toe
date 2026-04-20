@@ -7,12 +7,12 @@ namespace Snek.SingletonManager
     [UseSnekInspector]
     public class SnekSingletonManager : SnekMonoBehaviour
     {
-        public List<SnekMonoBehaviour> Singletons;
-        public List<SnekMonoBehaviour> SingletonPrefabs;
+        public List<SnekMonoSingleton> Singletons;
+        public List<SnekMonoSingleton> SingletonPrefabs;
 
         private static SnekSingletonManager _instance;
 
-        private static bool _isInitialized = false;
+        private static bool _isInstanceCreationComplete = false;
 
         protected override void Initialize()
         {
@@ -20,11 +20,10 @@ namespace Snek.SingletonManager
                 Destroy(gameObject);
 
             _instance = this;
-            _isInitialized = false;
+            _isInstanceCreationComplete = false;
 
             CreateSingletonInstances();
-
-            _isInitialized = true;
+            InitializeSingletonInstances();
         }
 
         protected override void Validate()
@@ -40,32 +39,40 @@ namespace Snek.SingletonManager
 
         private void CreateSingletonInstances()
         {
-            Singletons = new List<SnekMonoBehaviour>();
+            Singletons = new List<SnekMonoSingleton>();
 
-            foreach (SnekMonoBehaviour prefab in SingletonPrefabs)
+            foreach (SnekMonoSingleton prefab in SingletonPrefabs)
                 CreateSingletonInstance(prefab);
+
+            _isInstanceCreationComplete = true;
         }
 
-        private void CreateSingletonInstance(SnekMonoBehaviour prefab)
+        private void InitializeSingletonInstances()
         {
-            SnekMonoBehaviour singletonInstance = Instantiate(prefab, transform);
+            foreach (SnekMonoSingleton singletonInstance in Singletons)
+                singletonInstance.RunInitialization();
+        }
+
+        private void CreateSingletonInstance(SnekMonoSingleton prefab)
+        {
+            SnekMonoSingleton singletonInstance = Instantiate(prefab, transform);
             singletonInstance.name = prefab.name;
 
             Singletons.Add(singletonInstance);
         }
 
-        public static T GetSingleton<T>() where T : SnekMonoBehaviour
+        public static T GetSingleton<T>() where T : SnekMonoSingleton
         {
-            if(!_isInitialized)
+            if(!_isInstanceCreationComplete)
             {
                 Debug.LogError(
-                    "Trying to get a singleton reference before Singleton Manager is initialized.\n" +
-                    "Make sure to use a bootstrapper, disable dependencies until initialization is complete or initialize dependencies through Start().");
+                    "Trying to get a singleton reference before its instance is created.\n" +
+                    "Make sure to use a bootstrapper, disable dependencies until all instances are created or initialize dependencies through Start().");
 
                 return null;
             }
 
-            foreach (SnekMonoBehaviour singleton in _instance.Singletons)
+            foreach (SnekMonoSingleton singleton in _instance.Singletons)
                 if (singleton is T instance)
                     return instance;
 

@@ -1,11 +1,12 @@
 using Snek.GameUIPlus;
+using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
 
 namespace SnekEditor.SettingsMenu
 {
     [UseSnekInspector]
-    public class SnekSettingsMenu : SnekMonoBehaviour
+    public class SnekSettingsMenu : SnekMonoSingleton
     {
         [SerializeField] private GameObject _background;
         [SerializeField] private GameObject _mainPanel;

@@ -1,9 +1,12 @@
+using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
 
 [UseSnekInspector]
-public class GameRoundManager : SnekMonoBehaviour
+public class GameRoundManager : SnekMonoSingleton
 {
+    private UIPopupManager _popupManager;
+
     private PlayerTurn _firstTurn = PlayerTurn.Player1;
 
     public PlayerTurn CurrentTurn { get; private set; }
@@ -29,6 +32,17 @@ public class GameRoundManager : SnekMonoBehaviour
     };
 
     public PlacementGridButtonState[] _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
+
+    protected override void Initialize()
+    {
+        _popupManager = SnekSingletonManager.GetSingleton<UIPopupManager>();
+    }
+
+    protected override void Validate()
+    {
+        if (!_popupManager)
+            FailValidation("Cannot find UI Popup Manager singleton.");
+    }
 
     private void Update()
     {
@@ -89,6 +103,8 @@ public class GameRoundManager : SnekMonoBehaviour
         _isRoundInProgress = false;
 
         _firstTurn = GetNextPlayerTurn(_firstTurn);
+
+        _popupManager.ShowPopup<RoundFinishedPopup>(true);
 
         if (isDraw)
             Debug.Log("Draw!");
