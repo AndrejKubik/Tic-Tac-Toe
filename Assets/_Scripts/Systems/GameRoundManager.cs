@@ -1,6 +1,5 @@
 using Snek.Utilities;
 using UnityEngine;
-using UnityEngine.Playables;
 
 [UseSnekInspector]
 public class GameRoundManager : SnekMonoBehaviour
@@ -29,7 +28,7 @@ public class GameRoundManager : SnekMonoBehaviour
         new[] {2, 4, 6}
     };
 
-    private PlacementGridButtonState[] _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
+    public PlacementGridButtonState[] _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
 
     private void Update()
     {
@@ -57,13 +56,11 @@ public class GameRoundManager : SnekMonoBehaviour
         _currentRoundData.TotalMoves++;
 
         if (IsAnyWinComboAchieved(playedCellState))
-        {
-            FinishRound();
-
-            return;
-        }
-
-        CurrentTurn = GetNextPlayerTurn(CurrentTurn);
+            FinishRound(false);
+        else if (_currentRoundData.TotalMoves == 9)
+            FinishRound(true);
+        else
+            CurrentTurn = GetNextPlayerTurn(CurrentTurn);
     }
 
     private bool IsAnyWinComboAchieved(PlacementGridButtonState playedCellState)
@@ -87,12 +84,15 @@ public class GameRoundManager : SnekMonoBehaviour
         return playerTurn == PlayerTurn.Player1 ? PlayerTurn.Player2 : PlayerTurn.Player1;
     }
 
-    public void FinishRound()
+    public void FinishRound(bool isDraw)
     {
         _isRoundInProgress = false;
 
         _firstTurn = GetNextPlayerTurn(_firstTurn);
 
-        Debug.Log($"{CurrentTurn} wins!");
+        if (isDraw)
+            Debug.Log("Draw!");
+        else
+            Debug.Log($"{CurrentTurn} wins!");
     }
 }
