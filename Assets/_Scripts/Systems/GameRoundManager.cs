@@ -64,12 +64,10 @@ public class GameRoundManager : SnekMonoSingleton
         };
 
         CurrentTurn = _firstTurn;
-
+        _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
         _isRoundInProgress = true;
 
         OnNewRoundStarted?.Invoke();
-
-        _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
     }
 
     public void EndTurn(int playedCellIndex, PlacementGridButtonState playedCellState)
