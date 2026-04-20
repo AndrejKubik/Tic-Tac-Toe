@@ -32,7 +32,7 @@ public class GameRoundManager : SnekMonoSingleton
         new[] {2, 4, 6}
     };
 
-    public PlacementGridButtonState[] _playingBoard;
+    private PlacementGridButtonState[] _playingBoard;
 
     public event Action OnNewRoundStarted;
 
@@ -65,6 +65,7 @@ public class GameRoundManager : SnekMonoSingleton
 
         CurrentTurn = _firstTurn;
         _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
+
         _isRoundInProgress = true;
 
         OnNewRoundStarted?.Invoke();
@@ -114,8 +115,10 @@ public class GameRoundManager : SnekMonoSingleton
         _popupManager.ShowPopup<RoundFinishedPopup>(true);
 
         if (isDraw)
-            Debug.Log("Draw!");
-        else
-            Debug.Log($"{CurrentTurn} wins!");
+            _currentRoundData.Result = RoundResult.Draw;
+        else if (CurrentTurn == PlayerTurn.Player1)
+            _currentRoundData.Result = RoundResult.Player1Win;
+        else if (CurrentTurn == PlayerTurn.Player2)
+            _currentRoundData.Result = RoundResult.Player2Win;
     }
 }
