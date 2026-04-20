@@ -637,6 +637,7 @@ GameObject:
   - component: {fileID: 5027780410243669360}
   - component: {fileID: 2036707946692576393}
   - component: {fileID: 6809215577254965663}
+  - component: {fileID: -7190924498236482608}
   m_Layer: 5
   m_Name: RoundFinishedPopup
   m_TagString: Untagged
@@ -702,6 +703,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-7190924498236482608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353078491609228770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b13171377adc4342bebe127781f681c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoundFinishedPopup
+  _retryButton: {fileID: 4067277286132721950}
+  _exitButton: {fileID: 8267529832345896890}
 --- !u!1 &6505430921423224122
 GameObject:
   m_ObjectHideFlags: 0
