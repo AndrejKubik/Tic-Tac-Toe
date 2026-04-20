@@ -1,3 +1,4 @@
+using System;
 using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
@@ -31,7 +32,9 @@ public class GameRoundManager : SnekMonoSingleton
         new[] {2, 4, 6}
     };
 
-    public PlacementGridButtonState[] _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
+    public PlacementGridButtonState[] _playingBoard;
+
+    public event Action OnNewRoundStarted;
 
     protected override void Initialize()
     {
@@ -52,6 +55,8 @@ public class GameRoundManager : SnekMonoSingleton
 
     public void StartRound()
     {
+        Debug.Log("New round started.");
+
         _currentRoundData = new RoundData()
         {
             ElapsedTime = 0f,
@@ -61,6 +66,10 @@ public class GameRoundManager : SnekMonoSingleton
         CurrentTurn = _firstTurn;
 
         _isRoundInProgress = true;
+
+        OnNewRoundStarted?.Invoke();
+
+        _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
     }
 
     public void EndTurn(int playedCellIndex, PlacementGridButtonState playedCellState)

@@ -1,6 +1,5 @@
 using Snek.SingletonManager;
 using Snek.Utilities;
-using UnityEngine;
 
 [UseSnekInspector]
 public class PlacementGrid : SnekMonoBehaviour
@@ -37,6 +36,8 @@ public class PlacementGrid : SnekMonoBehaviour
 
     protected override void OnInitializationSuccess()
     {
+        _roundManager.OnNewRoundStarted += ResetAllCells;
+
         for (int i = 0; i < _buttons.Length; i++)
         {
             PlacementGridButton button = _buttons[i];
@@ -44,6 +45,17 @@ public class PlacementGrid : SnekMonoBehaviour
             button.CellIndex = i;
             button.SetExternalCallback(OnGridButtonClick, button);
         }
+    }
+
+    private void OnDestroy()
+    {
+        _roundManager.OnNewRoundStarted -= ResetAllCells;
+    }
+
+    public void ResetAllCells()
+    {
+        foreach (PlacementGridButton button in _buttons)
+            button.State = PlacementGridButtonState.None;
     }
 
     private void OnGridButtonClick(PlacementGridButton button)
