@@ -176,6 +176,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7747974846831451451, guid: 8644ffd8bb07d9848a963c263ac86650, type: 3}
+      propertyPath: 'SingletonPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 7663962264419908910, guid: 8413cd7a6fa3dfd469081464a4933a7d, type: 3}
+    - target: {fileID: 7747974846831451451, guid: 8644ffd8bb07d9848a963c263ac86650, type: 3}
       propertyPath: 'SingletonPrefabs.Array.data[2]'
       value: 
       objectReference: {fileID: 6429557548057344140, guid: b11b9dd78b9d4bc4e885599a4d5b5108, type: 3}

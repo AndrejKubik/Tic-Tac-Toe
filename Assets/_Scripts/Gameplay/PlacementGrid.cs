@@ -1,5 +1,6 @@
 using Snek.SingletonManager;
 using Snek.Utilities;
+using UnityEngine;
 
 [UseSnekInspector]
 public class PlacementGrid : SnekMonoBehaviour
@@ -55,7 +56,11 @@ public class PlacementGrid : SnekMonoBehaviour
     public void ResetAllCells()
     {
         foreach (PlacementGridButton button in _buttons)
+        {
             button.State = PlacementGridButtonState.None;
+            button.SetSymbolSprite(null);
+            button.EnableInteraction(true);
+        }
     }
 
     private void OnGridButtonClick(PlacementGridButton button)
@@ -63,15 +68,23 @@ public class PlacementGrid : SnekMonoBehaviour
         if (button.State != PlacementGridButtonState.None)
             return;
 
-        if(_roundManager.CurrentTurn == PlayerTurn.Player1)
+        if (_roundManager.GetCurrentTurnSymbol() == PlacementGridButtonState.X)
         {
             button.State = PlacementGridButtonState.X;
             button.SetSymbolSprite(_themeManager.GetSymbolX());
         }
-        else
+        else if (_roundManager.GetCurrentTurnSymbol() == PlacementGridButtonState.O)
         {
             button.State = PlacementGridButtonState.O;
             button.SetSymbolSprite(_themeManager.GetSymbolO());
+        }
+        else
+        {
+            Debug.LogError(
+                $"Trying to place NONE on a cell outside of {nameof(ResetAllCells)}() method.\n" +
+                $"Aborting...");
+            
+            return;
         }
 
         button.EnableInteraction(false);

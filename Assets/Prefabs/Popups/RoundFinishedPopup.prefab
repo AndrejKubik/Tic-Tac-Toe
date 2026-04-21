@@ -715,6 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b13171377adc4342bebe127781f681c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundFinishedPopup
+  _message: {fileID: 2372655146159282701}
   _retryButton: {fileID: 4067277286132721950}
   _exitButton: {fileID: 8267529832345896890}
 --- !u!1 &6505430921423224122

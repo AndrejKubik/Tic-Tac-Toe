@@ -53,14 +53,28 @@ public class GameRoundManager : SnekMonoSingleton
             _currentRoundData.ElapsedTime += Time.deltaTime;
     }
 
-    public void StartRound()
+    public void StartRound(bool isNewGame)
     {
-        Debug.Log("New round started.");
+        PlacementGridButtonState player1Symbol;
+        PlacementGridButtonState player2Symbol;
+
+        if (isNewGame)
+        {
+            player1Symbol = PlacementGridButtonState.X;
+            player2Symbol = PlacementGridButtonState.O;
+        }
+        else
+        {
+            player1Symbol = SwitchSymbol(GetCurrentRoundPlayer1Symbol());
+            player2Symbol = SwitchSymbol(GetCurrentRoundPlayer2Symbol());
+        }
 
         _currentRoundData = new RoundData()
         {
             ElapsedTime = 0f,
             TotalMoves = 0,
+            Player1Symbol = player1Symbol,
+            Player2Symbol = player2Symbol
         };
 
         CurrentTurn = _firstTurn;
@@ -69,6 +83,18 @@ public class GameRoundManager : SnekMonoSingleton
         _isRoundInProgress = true;
 
         OnNewRoundStarted?.Invoke();
+    }
+
+    private PlacementGridButtonState SwitchSymbol(PlacementGridButtonState currentSymbol)
+    {
+        if (currentSymbol == PlacementGridButtonState.X)
+            return PlacementGridButtonState.O;
+        else if (currentSymbol == PlacementGridButtonState.O)
+            return PlacementGridButtonState.X;
+
+        Debug.LogError("Trying to switch a symbol from NONE state.");
+
+        return PlacementGridButtonState.None;
     }
 
     public void EndTurn(int playedCellIndex, PlacementGridButtonState playedCellState)
@@ -112,13 +138,44 @@ public class GameRoundManager : SnekMonoSingleton
 
         _firstTurn = GetNextPlayerTurn(_firstTurn);
 
-        _popupManager.ShowPopup<RoundFinishedPopup>(true);
+        ResolveRound(isDraw);
 
+        _popupManager.ShowPopup<RoundFinishedPopup>(true);
+    }
+
+    private void ResolveRound(bool isDraw)
+    {
         if (isDraw)
-            _currentRoundData.Result = RoundResult.Draw;
+            SetCurrentRoundResult(RoundResult.Draw);
         else if (CurrentTurn == PlayerTurn.Player1)
-            _currentRoundData.Result = RoundResult.Player1Win;
+            SetCurrentRoundResult(RoundResult.Player1Win);
         else if (CurrentTurn == PlayerTurn.Player2)
-            _currentRoundData.Result = RoundResult.Player2Win;
+            SetCurrentRoundResult(RoundResult.Player2Win);
+    }
+
+    private void SetCurrentRoundResult(RoundResult result)
+    {
+        _currentRoundData.Result = result;
+    }
+
+    public RoundData GetCurrentRoundData()
+    {
+        return _currentRoundData;
+    }
+
+    public PlacementGridButtonState GetCurrentRoundPlayer1Symbol()
+    {
+        return _currentRoundData.Player1Symbol;
+    }
+
+    public PlacementGridButtonState GetCurrentRoundPlayer2Symbol()
+    {
+        return _currentRoundData.Player2Symbol;
+    }
+
+    public PlacementGridButtonState GetCurrentTurnSymbol()
+    {
+        return CurrentTurn == PlayerTurn.Player1 ?
+            GetCurrentRoundPlayer1Symbol() : GetCurrentRoundPlayer2Symbol();
     }
 }

@@ -42,7 +42,7 @@ public class GameManager : SnekMonoSingleton
     {
         SceneManager.sceneLoaded -= OnGameplaySceneLoaded;
 
-        _roundManager.StartRound();
+        _roundManager.StartRound(true);
     }
 
     public void ReturnToMainMenu()

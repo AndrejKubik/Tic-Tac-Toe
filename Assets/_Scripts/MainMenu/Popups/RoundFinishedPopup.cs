@@ -44,7 +44,15 @@ public class RoundFinishedPopup : UIPopup
 
     private void OnEnable()
     {
-        
+        RoundData roundData = _roundManager.GetCurrentRoundData();
+
+        _message.text = roundData.Result switch
+        {
+            RoundResult.Draw => "It's a draw!",
+            RoundResult.Player1Win => "Player 1 wins!",
+            RoundResult.Player2Win => "Player 2 wins!",
+            _ => string.Empty
+        };
     }
 
     protected override void OnInitializationSuccess()
@@ -55,7 +63,7 @@ public class RoundFinishedPopup : UIPopup
 
     private void OnPlayButtonClick()
     {
-        _gameManager.StartGame();
+        _roundManager.StartRound(false);
 
         ClosePopup();
     }
