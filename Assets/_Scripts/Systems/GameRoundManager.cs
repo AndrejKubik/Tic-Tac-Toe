@@ -8,6 +8,8 @@ public class GameRoundManager : SnekMonoSingleton
 {
     private UIPopupManager _popupManager;
 
+    [SerializeField] private GameRoundHistory _roundHistory;
+
     private PlayerTurn _firstTurn = PlayerTurn.Player1;
 
     public PlayerTurn CurrentTurn { get; private set; }
@@ -45,6 +47,9 @@ public class GameRoundManager : SnekMonoSingleton
     {
         if (!_popupManager)
             FailValidation("Cannot find UI Popup Manager singleton.");
+
+        if (!_roundHistory)
+            FailValidation("Game Round History asset not assigned.");
     }
 
     private void Update()
@@ -140,6 +145,7 @@ public class GameRoundManager : SnekMonoSingleton
 
         ResolveRound(isDraw);
 
+        _roundHistory.StoreRoundData(_currentRoundData);
         _popupManager.ShowPopup<RoundFinishedPopup>(true);
     }
 
@@ -158,9 +164,9 @@ public class GameRoundManager : SnekMonoSingleton
         _currentRoundData.Result = result;
     }
 
-    public RoundData GetCurrentRoundData()
+    public RoundResult GetCurrentRoundResult()
     {
-        return _currentRoundData;
+        return _currentRoundData.Result;
     }
 
     public PlacementGridButtonState GetCurrentRoundPlayer1Symbol()

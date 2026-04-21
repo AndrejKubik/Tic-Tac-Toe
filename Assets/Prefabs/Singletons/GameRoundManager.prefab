@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286ff16830a37bd4592b1ae3913fa8e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameRoundManager
+  _roundHistory: {fileID: 11400000, guid: dce4c2f461abf7e4b94522cb7865e429, type: 2}

@@ -44,9 +44,9 @@ public class RoundFinishedPopup : UIPopup
 
     private void OnEnable()
     {
-        RoundData roundData = _roundManager.GetCurrentRoundData();
+        RoundResult roundResult = _roundManager.GetCurrentRoundResult();
 
-        _message.text = roundData.Result switch
+        _message.text = roundResult switch
         {
             RoundResult.Draw => "It's a draw!",
             RoundResult.Player1Win => "Player 1 wins!",
