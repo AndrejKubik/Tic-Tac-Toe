@@ -7,8 +7,7 @@ using UnityEngine;
 public class GameRoundManager : SnekMonoSingleton
 {
     private UIPopupManager _popupManager;
-
-    [SerializeField] private GameRoundHistory _roundHistory;
+    private StatsManager _statsManager;
 
     private PlayerTurn _firstTurn = PlayerTurn.Player1;
 
@@ -37,10 +36,12 @@ public class GameRoundManager : SnekMonoSingleton
     private PlacementGridButtonState[] _playingBoard;
 
     public event Action OnNewRoundStarted;
+    public event Action<RoundData> OnRoundFinished;
 
     protected override void Initialize()
     {
         _popupManager = SnekSingletonManager.GetSingleton<UIPopupManager>();
+        _statsManager = SnekSingletonManager.GetSingleton<StatsManager>();
     }
 
     protected override void Validate()
@@ -48,8 +49,8 @@ public class GameRoundManager : SnekMonoSingleton
         if (!_popupManager)
             FailValidation("Cannot find UI Popup Manager singleton.");
 
-        if (!_roundHistory)
-            FailValidation("Game Round History asset not assigned.");
+        if (!_statsManager)
+            FailValidation("Cannot find Stats Manager singleton.");
     }
 
     private void Update()
@@ -145,7 +146,7 @@ public class GameRoundManager : SnekMonoSingleton
 
         ResolveRound(isDraw);
 
-        _roundHistory.StoreRoundData(_currentRoundData);
+        _statsManager.StoreRoundData(_currentRoundData);
         _popupManager.ShowPopup<RoundFinishedPopup>(true);
     }
 

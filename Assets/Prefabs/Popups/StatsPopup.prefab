@@ -372,6 +372,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatsPopup
   _closeButton: {fileID: 8267529832345896890}
+  _gamesPlayedCount: {fileID: 3458756158430176859}
+  _player1WinsCount: {fileID: 7520349652134487419}
+  _player2WinsCount: {fileID: 6314540991539071470}
+  _drawCount: {fileID: 8390716378957870613}
+  _averateGameTime: {fileID: 8072044216192147218}
 --- !u!1 &6505430921423224122
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,6 +662,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Average Game Time :'
       objectReference: {fileID: 0}
+    - target: {fileID: 3891519557652751935, guid: 7196145a3620a554484e7f550a698090, type: 3}
+      propertyPath: m_Name
+      value: Duration
+      objectReference: {fileID: 0}
     - target: {fileID: 5002431805135919193, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -721,6 +730,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7821622226556635422, guid: 7196145a3620a554484e7f550a698090, type: 3}
+      propertyPath: m_Name
+      value: DurationText
+      objectReference: {fileID: 0}
     - target: {fileID: 8896545208555253934, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_text
       value: '0
@@ -745,6 +758,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5002431805135919193, guid: 7196145a3620a554484e7f550a698090, type: 3}
   m_PrefabInstance: {fileID: 825084285471076284}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8072044216192147218 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8896545208555253934, guid: 7196145a3620a554484e7f550a698090, type: 3}
+  m_PrefabInstance: {fileID: 825084285471076284}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1082887750949422779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -756,6 +780,10 @@ PrefabInstance:
     - target: {fileID: 3746904683904650726, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_text
       value: 'Draws :'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3891519557652751935, guid: 7196145a3620a554484e7f550a698090, type: 3}
+      propertyPath: m_Name
+      value: DrawCount
       objectReference: {fileID: 0}
     - target: {fileID: 5002431805135919193, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_AnchorMax.x
@@ -819,7 +847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7821622226556635422, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_Name
-      value: DrawCount
+      value: DrawCountText
       objectReference: {fileID: 0}
     - target: {fileID: 9109519341221703323, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_Name
@@ -835,6 +863,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5002431805135919193, guid: 7196145a3620a554484e7f550a698090, type: 3}
   m_PrefabInstance: {fileID: 1082887750949422779}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8390716378957870613 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8896545208555253934, guid: 7196145a3620a554484e7f550a698090, type: 3}
+  m_PrefabInstance: {fileID: 1082887750949422779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1381275300210857429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -909,7 +948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7821622226556635422, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_Name
-      value: CountText
+      value: WinCountText
       objectReference: {fileID: 0}
     - target: {fileID: 9109519341221703323, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_Name
@@ -925,6 +964,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5002431805135919193, guid: 7196145a3620a554484e7f550a698090, type: 3}
   m_PrefabInstance: {fileID: 1381275300210857429}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7520349652134487419 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8896545208555253934, guid: 7196145a3620a554484e7f550a698090, type: 3}
+  m_PrefabInstance: {fileID: 1381275300210857429}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &3231087714492741952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -936,6 +986,10 @@ PrefabInstance:
     - target: {fileID: 3746904683904650726, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_text
       value: 'Player 2 Wins :'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3891519557652751935, guid: 7196145a3620a554484e7f550a698090, type: 3}
+      propertyPath: m_Name
+      value: WinCount
       objectReference: {fileID: 0}
     - target: {fileID: 5002431805135919193, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_AnchorMax.x
@@ -997,6 +1051,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7821622226556635422, guid: 7196145a3620a554484e7f550a698090, type: 3}
+      propertyPath: m_Name
+      value: WinCountText
+      objectReference: {fileID: 0}
     - target: {fileID: 9109519341221703323, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_Name
       value: PlayerTwoWins
@@ -1006,6 +1064,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7196145a3620a554484e7f550a698090, type: 3}
+--- !u!114 &6314540991539071470 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8896545208555253934, guid: 7196145a3620a554484e7f550a698090, type: 3}
+  m_PrefabInstance: {fileID: 3231087714492741952}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!224 &7618705258986463513 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5002431805135919193, guid: 7196145a3620a554484e7f550a698090, type: 3}
@@ -1089,7 +1158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7821622226556635422, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_Name
-      value: CountText
+      value: GamesCountText
       objectReference: {fileID: 0}
     - target: {fileID: 8896545208555253934, guid: 7196145a3620a554484e7f550a698090, type: 3}
       propertyPath: m_fontSize
@@ -1109,3 +1178,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5002431805135919193, guid: 7196145a3620a554484e7f550a698090, type: 3}
   m_PrefabInstance: {fileID: 6091427311411746549}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3458756158430176859 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8896545208555253934, guid: 7196145a3620a554484e7f550a698090, type: 3}
+  m_PrefabInstance: {fileID: 6091427311411746549}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
