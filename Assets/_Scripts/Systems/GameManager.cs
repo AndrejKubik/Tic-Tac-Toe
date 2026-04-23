@@ -1,8 +1,6 @@
-using System;
 using Snek.PlayModeManager;
 using Snek.SingletonManager;
 using Snek.Utilities;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,8 +9,8 @@ public class GameManager : SnekMonoSingleton
 {
     private GameRoundManager _roundManager;
 
-    [SerializeField] private SceneAsset _gameScene;
-    [SerializeField] private SceneAsset _mainMenuScene;
+    public string MainMenuSceneName;
+    public string GameSceneName;
 
     protected override void Initialize()
     {
@@ -24,10 +22,10 @@ public class GameManager : SnekMonoSingleton
         if (!_roundManager)
             FailValidation("Cannot find Game Round Manager singleton.");
 
-        if (!_gameScene)
+        if (string.IsNullOrEmpty(MainMenuSceneName))
             FailValidation("Game scene not assigned.");
 
-        if (!_mainMenuScene)
+        if (string.IsNullOrEmpty(GameSceneName))
             FailValidation("Main menu scene not assigned.");
     }
 
@@ -35,7 +33,7 @@ public class GameManager : SnekMonoSingleton
     {
         SceneManager.sceneLoaded += OnGameplaySceneLoaded;
 
-        SceneManager.LoadScene(_gameScene.name);
+        SceneManager.LoadScene(GameSceneName);
     }
 
     private void OnGameplaySceneLoaded(Scene scene, LoadSceneMode loadMode)
@@ -47,7 +45,7 @@ public class GameManager : SnekMonoSingleton
 
     public void ReturnToMainMenu()
     {
-        SceneManager.LoadScene(_mainMenuScene.name);
+        SceneManager.LoadScene(MainMenuSceneName);
     }
 
     public void ExitGame()

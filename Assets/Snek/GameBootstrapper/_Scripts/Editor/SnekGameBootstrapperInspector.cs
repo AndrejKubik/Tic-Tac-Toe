@@ -10,7 +10,7 @@ namespace SnekEditor.GameBootstrapper
     public class SnekGameBootstrapperInspector : SnekMonoBehaviourInspectorCustom<SnekGameBootstrapper>
     {
         private const float StartScenePropertyWidth = 200f;
-        private const float StartScenePropertyHeight= 25f;
+        private const float StartScenePropertyHeight = 25f;
 
         private GUIStyle _labelStyle;
 
