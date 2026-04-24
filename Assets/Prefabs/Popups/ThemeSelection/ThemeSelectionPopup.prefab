@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 6809215577254965663}
   - component: {fileID: 2571337426612852468}
   m_Layer: 5
-  m_Name: ThemesSelectionPopup
+  m_Name: ThemeSelectionPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
