@@ -9,12 +9,12 @@ public class GameRoundManager : SnekMonoSingleton
     private UIPopupManager _popupManager;
     private StatsManager _statsManager;
 
-    private PlayerTurn _firstTurn = PlayerTurn.Player1;
+    private PlayerInstance _firstTurn = PlayerInstance.Player1;
 
-    public PlayerTurn CurrentTurn { get; private set; }
+    private PlayerInstance _currentTurn;
     private RoundData _currentRoundData;
 
-    private bool _isRoundInProgress = false;
+    public bool IsRoundInProgress { get; private set; }
 
     private static readonly int[][] _cellWinCombos =
     {
@@ -36,6 +36,8 @@ public class GameRoundManager : SnekMonoSingleton
     private PlacementGridCellState[] _playingBoardCells;
 
     public event Action OnNewRoundStarted;
+    public event Action<float> OnElapsedTimeUpdated;
+    public event Action<PlayerInstance, int> OnPlayerMovesUpdated;
     public event Action<RoundData> OnRoundFinished;
 
     protected override void Initialize()
@@ -55,8 +57,15 @@ public class GameRoundManager : SnekMonoSingleton
 
     private void Update()
     {
-        if (_isRoundInProgress)
-            _currentRoundData.ElapsedTime += Time.deltaTime;
+        if (IsRoundInProgress)
+            UpdateElapsedTime();
+    }
+
+    private void UpdateElapsedTime()
+    {
+        _currentRoundData.ElapsedTime += Time.deltaTime;
+
+        OnElapsedTimeUpdated?.Invoke(_currentRoundData.ElapsedTime);
     }
 
     public void StartRound(bool isNewGame)
@@ -83,10 +92,10 @@ public class GameRoundManager : SnekMonoSingleton
             Player2Symbol = player2Symbol
         };
 
-        CurrentTurn = _firstTurn;
+        _currentTurn = _firstTurn;
         _playingBoardCells = new PlacementGridCellState[PlayingBoard.TotalCells];
 
-        _isRoundInProgress = true;
+        IsRoundInProgress = true;
 
         OnNewRoundStarted?.Invoke();
     }
@@ -107,14 +116,32 @@ public class GameRoundManager : SnekMonoSingleton
     {
         _playingBoardCells[playedCellIndex] = playedCellState;
 
-        _currentRoundData.TotalMoves++;
+        UpdatePlayerMovesCount();
 
         if (IsAnyWinComboAchieved(playedCellState))
             FinishRound(false);
         else if (_currentRoundData.TotalMoves == 9)
             FinishRound(true);
         else
-            CurrentTurn = GetNextPlayerTurn(CurrentTurn);
+            _currentTurn = GetNextPlayerTurn(_currentTurn);
+    }
+
+    private void UpdatePlayerMovesCount()
+    {
+        _currentRoundData.TotalMoves++;
+
+        if (_currentTurn == PlayerInstance.Player1)
+        {
+            _currentRoundData.Player1Moves++;
+
+            OnPlayerMovesUpdated?.Invoke(_currentTurn, _currentRoundData.Player1Moves);
+        }
+        else
+        {
+            _currentRoundData.Player2Moves++;
+
+            OnPlayerMovesUpdated?.Invoke(_currentTurn, _currentRoundData.Player2Moves);
+        }
     }
 
     private bool IsAnyWinComboAchieved(PlacementGridCellState playedCellState)
@@ -133,14 +160,14 @@ public class GameRoundManager : SnekMonoSingleton
             && _playingBoardCells[winCombo[2]] == playedCellState;
     }
 
-    private PlayerTurn GetNextPlayerTurn(PlayerTurn playerTurn)
+    private PlayerInstance GetNextPlayerTurn(PlayerInstance playerTurn)
     {
-        return playerTurn == PlayerTurn.Player1 ? PlayerTurn.Player2 : PlayerTurn.Player1;
+        return playerTurn == PlayerInstance.Player1 ? PlayerInstance.Player2 : PlayerInstance.Player1;
     }
 
     public void FinishRound(bool isDraw)
     {
-        _isRoundInProgress = false;
+        IsRoundInProgress = false;
 
         _firstTurn = GetNextPlayerTurn(_firstTurn);
 
@@ -154,9 +181,9 @@ public class GameRoundManager : SnekMonoSingleton
     {
         if (isDraw)
             SetCurrentRoundResult(RoundResult.Draw);
-        else if (CurrentTurn == PlayerTurn.Player1)
+        else if (_currentTurn == PlayerInstance.Player1)
             SetCurrentRoundResult(RoundResult.Player1Win);
-        else if (CurrentTurn == PlayerTurn.Player2)
+        else if (_currentTurn == PlayerInstance.Player2)
             SetCurrentRoundResult(RoundResult.Player2Win);
     }
 
@@ -182,7 +209,7 @@ public class GameRoundManager : SnekMonoSingleton
 
     public PlacementGridCellState GetCurrentTurnSymbol()
     {
-        return CurrentTurn == PlayerTurn.Player1 ?
+        return _currentTurn == PlayerInstance.Player1 ?
             GetCurrentRoundPlayer1Symbol() : GetCurrentRoundPlayer2Symbol();
     }
 }

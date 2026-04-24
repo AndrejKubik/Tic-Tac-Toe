@@ -1,4 +1,4 @@
-public enum PlayerTurn
+public enum PlayerInstance
 {
     Player1,
     Player2

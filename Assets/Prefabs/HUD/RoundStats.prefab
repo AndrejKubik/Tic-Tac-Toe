@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7866626831269388702}
   - component: {fileID: 4509358389395580979}
+  - component: {fileID: 458785127131066646}
   m_Layer: 5
   m_Name: RoundStats
   m_TagString: Untagged
@@ -65,6 +66,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &458785127131066646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155315052698226140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ce4fd2b72b3ea4b8cebcaf870db318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoundStats
+  _roundDuration: {fileID: 2734546808528777141}
+  _player1Moves: {fileID: 7753084969704244261}
+  _player2Moves: {fileID: 1219889224523824825}
 --- !u!1001 &79811708866096036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165,6 +181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1Moves
       objectReference: {fileID: 0}
+    - target: {fileID: 9042923083820946993, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}
+      propertyPath: m_Name
+      value: Player1MoveCount
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -175,6 +195,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6095943575916808054, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}
   m_PrefabInstance: {fileID: 79811708866096036}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7753084969704244261 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7675244135540141953, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}
+  m_PrefabInstance: {fileID: 79811708866096036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &5724354633452486708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -267,6 +298,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoundDuration
       objectReference: {fileID: 0}
+    - target: {fileID: 9042923083820946993, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}
+      propertyPath: m_Name
+      value: RoundDurationSecondCount
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -277,6 +312,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6095943575916808054, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}
   m_PrefabInstance: {fileID: 5724354633452486708}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2734546808528777141 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7675244135540141953, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}
+  m_PrefabInstance: {fileID: 5724354633452486708}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &8822018583280521528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -377,11 +423,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2Moves
       objectReference: {fileID: 0}
+    - target: {fileID: 9042923083820946993, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}
+      propertyPath: m_Name
+      value: Player2MoveCount
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}
+--- !u!114 &1219889224523824825 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7675244135540141953, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}
+  m_PrefabInstance: {fileID: 8822018583280521528}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!224 &3384243238076159566 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6095943575916808054, guid: cac6caf8b544e9d488ff461cc299b313, type: 3}

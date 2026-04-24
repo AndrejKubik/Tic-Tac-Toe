@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 5775265544325078912}
   - component: {fileID: 7675244135540141953}
   m_Layer: 5
-  m_Name: WinCount
+  m_Name: Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
