@@ -119,6 +119,7 @@ MonoBehaviour:
   - {fileID: 2571337426612852468, guid: fbc17439c9ced0d4e88136d51ca1f91f, type: 3}
   - {fileID: -5809887095222285693, guid: 9439df43ce10f0e479da208d10295ebf, type: 3}
   - {fileID: -7190924498236482608, guid: d8f18debece99bf4592703b8681a5b33, type: 3}
+  - {fileID: 3759460241699136034, guid: 32fb3d4b3dcd267409ae946eaf38ad67, type: 3}
   _popupSpawner: {fileID: 5962200794356569082}
 --- !u!1 &7441015995039145364
 GameObject:

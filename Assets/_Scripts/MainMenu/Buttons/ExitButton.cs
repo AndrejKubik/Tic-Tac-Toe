@@ -5,19 +5,27 @@ using Snek.Utilities;
 [UseSnekInspector]
 public class ExitButton : SnekUIButtonWithSFX
 {
-    private GameManager _gameManager;
+    private UIPopupManager _popupManager;
 
     protected override void Initialize()
     {
         base.Initialize();
 
-        _gameManager = SnekSingletonManager.GetSingleton<GameManager>();
+        _popupManager = SnekSingletonManager.GetSingleton<UIPopupManager>();
+    }
+
+    protected override void Validate()
+    {
+        base.Validate();
+
+        if (!_popupManager)
+            FailValidation("Cannot find UI Popup Manager singleton.");
     }
 
     protected override void OnButtonClick()
     {
         base.OnButtonClick();
 
-        _gameManager.ExitGame();
+        _popupManager.ShowPopup<QuitApplicationPopup>(true);
     }
 }

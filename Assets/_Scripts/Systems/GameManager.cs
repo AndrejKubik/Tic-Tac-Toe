@@ -48,11 +48,14 @@ public class GameManager : SnekMonoSingleton
         SceneManager.LoadScene(MainMenuSceneName);
     }
 
-    public void ExitGame()
+    public void QuitGame()
     {
-        if (Application.isEditor)
-            SnekPlayModeManagerRuntime.RequestPlayModeExit();
-        else
-            Application.Quit();
+#if UNITY_EDITOR
+        SnekPlayModeManagerRuntime.RequestPlayModeExit();
+#elif UNITY_WEBGL
+        Application.OpenURL(Application.absoluteURL);
+#else
+        Application.Quit();
+#endif
     }
 }
