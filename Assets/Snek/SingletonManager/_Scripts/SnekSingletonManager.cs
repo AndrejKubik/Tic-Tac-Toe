@@ -21,20 +21,28 @@ namespace Snek.SingletonManager
 
             _instance = this;
             _isInstanceCreationComplete = false;
-
-            CreateSingletonInstances();
-            InitializeSingletonInstances();
         }
 
         protected override void Validate()
         {
-            if (Singletons.Count != SingletonPrefabs.Count)
-                FailValidation("Duplicate singleton prefabs found.");
+            if (IsAnyPrefabReferenceMissing())
+                FailValidation("Found missing references in singleton prefabs list.");
         }
 
         protected override void OnInitializationSuccess()
         {
+            CreateSingletonInstances();
+            InitializeSingletonInstances();
             DontDestroyOnLoad(this);
+        }
+
+        private bool IsAnyPrefabReferenceMissing()
+        {
+            foreach (SnekMonoSingleton prefab in SingletonPrefabs)
+                if (prefab == null)
+                    return true;
+
+            return false;
         }
 
         private void CreateSingletonInstances()
