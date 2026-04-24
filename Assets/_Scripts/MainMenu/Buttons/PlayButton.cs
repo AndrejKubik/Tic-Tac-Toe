@@ -26,6 +26,6 @@ public class PlayButton : SnekUIButtonWithSFX
     {
         base.OnButtonClick();
 
-        _popupManager.ShowPopup<ThemeSelectionPopup>(true);
+        _popupManager.ShowPopup<GameThemeSelectionPopup>(true);
     }
 }

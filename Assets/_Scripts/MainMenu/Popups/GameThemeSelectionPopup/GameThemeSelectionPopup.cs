@@ -4,7 +4,7 @@ using Snek.Utilities;
 using UnityEngine;
 
 [UseSnekInspector]
-public class ThemeSelectionPopup : UIPopup
+public class GameThemeSelectionPopup : UIPopup
 {
     private GameManager _gameManager;
 
