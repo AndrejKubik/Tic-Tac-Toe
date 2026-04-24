@@ -15,6 +15,9 @@ public class UIPopupManager : SnekMonoSingleton
     {
         if (!_popupSpawner)
             FailValidation("Popup Spawner transform not assigned.");
+
+        if (IsAnyPrefabReferenceMissing())
+            FailValidation("Found missing references in popup prefabs list.");
     }
 
     protected override void OnInitializationSuccess()
@@ -31,6 +34,15 @@ public class UIPopupManager : SnekMonoSingleton
         }
 
         Destroy(_popupSpawner.gameObject);
+    }
+
+    private bool IsAnyPrefabReferenceMissing()
+    {
+        foreach (UIPopup prefab in _popupPrefabs)
+            if (prefab == null)
+                return true;
+
+        return false;
     }
 
     /// <summary>
