@@ -33,7 +33,7 @@ public class GameRoundManager : SnekMonoSingleton
         new[] {2, 4, 6}
     };
 
-    private PlacementGridButtonState[] _playingBoard;
+    private PlacementGridCellState[] _playingBoardCells;
 
     public event Action OnNewRoundStarted;
     public event Action<RoundData> OnRoundFinished;
@@ -61,13 +61,13 @@ public class GameRoundManager : SnekMonoSingleton
 
     public void StartRound(bool isNewGame)
     {
-        PlacementGridButtonState player1Symbol;
-        PlacementGridButtonState player2Symbol;
+        PlacementGridCellState player1Symbol;
+        PlacementGridCellState player2Symbol;
 
         if (isNewGame)
         {
-            player1Symbol = PlacementGridButtonState.X;
-            player2Symbol = PlacementGridButtonState.O;
+            player1Symbol = PlacementGridCellState.X;
+            player2Symbol = PlacementGridCellState.O;
         }
         else
         {
@@ -84,28 +84,28 @@ public class GameRoundManager : SnekMonoSingleton
         };
 
         CurrentTurn = _firstTurn;
-        _playingBoard = new PlacementGridButtonState[PlacementGrid.TotalCells];
+        _playingBoardCells = new PlacementGridCellState[PlayingBoard.TotalCells];
 
         _isRoundInProgress = true;
 
         OnNewRoundStarted?.Invoke();
     }
 
-    private PlacementGridButtonState SwitchSymbol(PlacementGridButtonState currentSymbol)
+    private PlacementGridCellState SwitchSymbol(PlacementGridCellState currentSymbol)
     {
-        if (currentSymbol == PlacementGridButtonState.X)
-            return PlacementGridButtonState.O;
-        else if (currentSymbol == PlacementGridButtonState.O)
-            return PlacementGridButtonState.X;
+        if (currentSymbol == PlacementGridCellState.X)
+            return PlacementGridCellState.O;
+        else if (currentSymbol == PlacementGridCellState.O)
+            return PlacementGridCellState.X;
 
         Debug.LogError("Trying to switch a symbol from NONE state.");
 
-        return PlacementGridButtonState.None;
+        return PlacementGridCellState.None;
     }
 
-    public void EndTurn(int playedCellIndex, PlacementGridButtonState playedCellState)
+    public void EndTurn(int playedCellIndex, PlacementGridCellState playedCellState)
     {
-        _playingBoard[playedCellIndex] = playedCellState;
+        _playingBoardCells[playedCellIndex] = playedCellState;
 
         _currentRoundData.TotalMoves++;
 
@@ -117,7 +117,7 @@ public class GameRoundManager : SnekMonoSingleton
             CurrentTurn = GetNextPlayerTurn(CurrentTurn);
     }
 
-    private bool IsAnyWinComboAchieved(PlacementGridButtonState playedCellState)
+    private bool IsAnyWinComboAchieved(PlacementGridCellState playedCellState)
     {
         foreach (int[] winCombo in _cellWinCombos)
             if (IsWinComboAchieved(winCombo, playedCellState))
@@ -126,11 +126,11 @@ public class GameRoundManager : SnekMonoSingleton
         return false;
     }
 
-    private bool IsWinComboAchieved(int[] winCombo, PlacementGridButtonState playedCellState)
+    private bool IsWinComboAchieved(int[] winCombo, PlacementGridCellState playedCellState)
     {
-        return _playingBoard[winCombo[0]] == playedCellState
-            && _playingBoard[winCombo[1]] == playedCellState
-            && _playingBoard[winCombo[2]] == playedCellState;
+        return _playingBoardCells[winCombo[0]] == playedCellState
+            && _playingBoardCells[winCombo[1]] == playedCellState
+            && _playingBoardCells[winCombo[2]] == playedCellState;
     }
 
     private PlayerTurn GetNextPlayerTurn(PlayerTurn playerTurn)
@@ -170,17 +170,17 @@ public class GameRoundManager : SnekMonoSingleton
         return _currentRoundData.Result;
     }
 
-    public PlacementGridButtonState GetCurrentRoundPlayer1Symbol()
+    public PlacementGridCellState GetCurrentRoundPlayer1Symbol()
     {
         return _currentRoundData.Player1Symbol;
     }
 
-    public PlacementGridButtonState GetCurrentRoundPlayer2Symbol()
+    public PlacementGridCellState GetCurrentRoundPlayer2Symbol()
     {
         return _currentRoundData.Player2Symbol;
     }
 
-    public PlacementGridButtonState GetCurrentTurnSymbol()
+    public PlacementGridCellState GetCurrentTurnSymbol()
     {
         return CurrentTurn == PlayerTurn.Player1 ?
             GetCurrentRoundPlayer1Symbol() : GetCurrentRoundPlayer2Symbol();

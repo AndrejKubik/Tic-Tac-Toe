@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6582786649532876613}
   - component: {fileID: -5916812478846139978}
   m_Layer: 5
-  m_Name: PlacementGridButton
+  m_Name: PlacementGridCellButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,13 +131,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8202756842470916323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad5dcf430cf92bd40846c07986adabee, type: 3}
+  m_Script: {fileID: 11500000, guid: aa182ac4ded6f5b48a24b72bb29882b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlacementGridButton
-  _buttonSFX: {fileID: 8300000, guid: bcb0a8546502aa249b71fd8902219d59, type: 3}
+  _buttonSFX: {fileID: 8300000, guid: 109bb9a335ad88a47b40d91cad0ce70d, type: 3}
   _useUnmutableAudioSource: 0
   _symbol: {fileID: 2878252763278997898}
-  State: 0
+  CellIndex: 0
+  CellState: 0
 --- !u!1001 &2197312807432062829
 PrefabInstance:
   m_ObjectHideFlags: 0

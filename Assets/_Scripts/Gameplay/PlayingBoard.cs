@@ -1,9 +1,10 @@
 using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
+using UnityEngine.UI;
 
 [UseSnekInspector]
-public class PlacementGrid : SnekMonoBehaviour
+public class PlayingBoard : SnekMonoBehaviour
 {
     private const int Columns = 3;
     private const int Rows = 3;
@@ -13,14 +14,16 @@ public class PlacementGrid : SnekMonoBehaviour
     private GameRoundManager _roundManager;
     private GameThemeManager _themeManager;
 
-    private PlacementGridButton[] _buttons;
+    private PlacementGridCellButton[] _buttons;
+    
+    [SerializeField] private Image _background;
 
     protected override void Initialize()
     {
         _roundManager = SnekSingletonManager.GetSingleton<GameRoundManager>();
         _themeManager = SnekSingletonManager.GetSingleton<GameThemeManager>();
 
-        _buttons = GetComponentsInChildren<PlacementGridButton>(true);
+        _buttons = GetComponentsInChildren<PlacementGridCellButton>(true);
     }
 
     protected override void Validate()
@@ -33,15 +36,18 @@ public class PlacementGrid : SnekMonoBehaviour
 
         if (_buttons == null || _buttons.Length != TotalCells)
             FailValidation($"Number of found placement grid buttons is invalid, must be [{TotalCells}].");
+
+        if (!_background)
+            FailValidation("Background image not assigned.");
     }
 
     protected override void OnInitializationSuccess()
     {
-        _roundManager.OnNewRoundStarted += ResetAllCells;
+        _roundManager.OnNewRoundStarted += OnNewRoundStart;
 
         for (int i = 0; i < _buttons.Length; i++)
         {
-            PlacementGridButton button = _buttons[i];
+            PlacementGridCellButton button = _buttons[i];
 
             button.CellIndex = i;
             button.SetExternalCallback(OnGridButtonClick, button);
@@ -50,32 +56,39 @@ public class PlacementGrid : SnekMonoBehaviour
 
     private void OnDestroy()
     {
-        _roundManager.OnNewRoundStarted -= ResetAllCells;
+        _roundManager.OnNewRoundStarted -= OnNewRoundStart;
+    }
+
+    private void OnNewRoundStart()
+    {
+        ResetAllCells();
+
+        _background.color = _themeManager.GetBackgroundColor();
     }
 
     public void ResetAllCells()
     {
-        foreach (PlacementGridButton button in _buttons)
+        foreach (PlacementGridCellButton button in _buttons)
         {
-            button.State = PlacementGridButtonState.None;
+            button.CellState = PlacementGridCellState.None;
             button.SetSymbolSprite(null);
             button.EnableInteraction(true);
         }
     }
 
-    private void OnGridButtonClick(PlacementGridButton button)
+    private void OnGridButtonClick(PlacementGridCellButton button)
     {
-        if (button.State != PlacementGridButtonState.None)
+        if (button.CellState != PlacementGridCellState.None)
             return;
 
-        if (_roundManager.GetCurrentTurnSymbol() == PlacementGridButtonState.X)
+        if (_roundManager.GetCurrentTurnSymbol() == PlacementGridCellState.X)
         {
-            button.State = PlacementGridButtonState.X;
+            button.CellState = PlacementGridCellState.X;
             button.SetSymbolSprite(_themeManager.GetSymbolX());
         }
-        else if (_roundManager.GetCurrentTurnSymbol() == PlacementGridButtonState.O)
+        else if (_roundManager.GetCurrentTurnSymbol() == PlacementGridCellState.O)
         {
-            button.State = PlacementGridButtonState.O;
+            button.CellState = PlacementGridCellState.O;
             button.SetSymbolSprite(_themeManager.GetSymbolO());
         }
         else
@@ -89,7 +102,7 @@ public class PlacementGrid : SnekMonoBehaviour
 
         button.EnableInteraction(false);
 
-        _roundManager.EndTurn(button.CellIndex, button.State);
+        _roundManager.EndTurn(button.CellIndex, button.CellState);
     }
 }
 

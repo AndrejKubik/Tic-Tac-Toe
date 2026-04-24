@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 [UseSnekInspector]
 [RequireComponent(typeof(Image))]
-public class PlacementGridButton : SnekUIButtonWithSFX
+public class PlacementGridCellButton : SnekUIButtonWithSFX
 {
     [SerializeField] private Image _symbol;
 
     public int CellIndex;
-    public PlacementGridButtonState State = PlacementGridButtonState.None;
+    public PlacementGridCellState CellState = PlacementGridCellState.None;
 
     protected override void Validate()
     {
@@ -23,5 +23,8 @@ public class PlacementGridButton : SnekUIButtonWithSFX
     public void SetSymbolSprite(Sprite sprite)
     {
         _symbol.sprite = sprite;
+
+        _symbol.color = sprite == null ?
+            Color.clear : Color.white;
     }
 }

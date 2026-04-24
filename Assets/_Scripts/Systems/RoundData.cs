@@ -4,8 +4,8 @@ using UnityEngine;
 [Serializable]
 public struct RoundData
 {
-    public PlacementGridButtonState Player1Symbol;
-    public PlacementGridButtonState Player2Symbol;
+    public PlacementGridCellState Player1Symbol;
+    public PlacementGridCellState Player2Symbol;
 
     [Space(10f)]
     public RoundResult Result;
