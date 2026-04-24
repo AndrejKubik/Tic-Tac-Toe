@@ -1,7 +1,7 @@
 ﻿using Snek.Utilities;
 using UnityEditor;
 
-[SnekAutoGenerateAsset("Assets/_Scripts/Systems/Editor", nameof(GameManagerInspectorCache))]
+[SnekAutoGenerateAsset("Assets/_Scripts/Systems/GameManager/Editor", nameof(GameManagerInspectorCache))]
 [UseSnekInspector(true)]
 public class GameManagerInspectorCache : SnekScriptableObject
 {
