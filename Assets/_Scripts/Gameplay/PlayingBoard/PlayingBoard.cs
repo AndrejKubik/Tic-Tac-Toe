@@ -1,3 +1,4 @@
+using System;
 using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
@@ -13,8 +14,10 @@ public class PlayingBoard : SnekMonoBehaviour
 
     private GameRoundManager _roundManager;
     private GameThemeManager _themeManager;
+    private VFXManager _vfxManager;
+    private UIPopupManager _popupManager;
 
-    private PlacementGridCellButton[] _buttons;
+    private PlacementGridCellButton[] _cellButtons;
     
     [SerializeField] private Image _background;
 
@@ -22,8 +25,10 @@ public class PlayingBoard : SnekMonoBehaviour
     {
         _roundManager = SnekSingletonManager.GetSingleton<GameRoundManager>();
         _themeManager = SnekSingletonManager.GetSingleton<GameThemeManager>();
+        _vfxManager = SnekSingletonManager.GetSingleton<VFXManager>();
+        _popupManager = SnekSingletonManager.GetSingleton<UIPopupManager>();
 
-        _buttons = GetComponentsInChildren<PlacementGridCellButton>(true);
+        _cellButtons = GetComponentsInChildren<PlacementGridCellButton>(true);
     }
 
     protected override void Validate()
@@ -34,7 +39,13 @@ public class PlayingBoard : SnekMonoBehaviour
         if (!_themeManager)
             FailValidation("Cannot find Game Theme Manager singleton.");
 
-        if (_buttons == null || _buttons.Length != TotalCells)
+        if (!_vfxManager)
+            FailValidation("Cannot find VFX Manager singleton.");
+
+        if (!_popupManager)
+            FailValidation("Cannot find UI Popup Manager singleton.");
+
+        if (_cellButtons == null || _cellButtons.Length != TotalCells)
             FailValidation($"Number of found placement grid buttons is invalid, must be [{TotalCells}].");
 
         if (!_background)
@@ -44,10 +55,11 @@ public class PlayingBoard : SnekMonoBehaviour
     protected override void OnInitializationSuccess()
     {
         _roundManager.OnNewRoundStarted += OnNewRoundStart;
+        _roundManager.OnRoundFinished += OnRoundFinish;
 
-        for (int i = 0; i < _buttons.Length; i++)
+        for (int i = 0; i < _cellButtons.Length; i++)
         {
-            PlacementGridCellButton button = _buttons[i];
+            PlacementGridCellButton button = _cellButtons[i];
 
             button.CellIndex = i;
             button.SetExternalCallback(OnGridButtonClick, button);
@@ -57,6 +69,7 @@ public class PlayingBoard : SnekMonoBehaviour
     private void OnDestroy()
     {
         _roundManager.OnNewRoundStarted -= OnNewRoundStart;
+        _roundManager.OnRoundFinished -= OnRoundFinish;
     }
 
     private void OnNewRoundStart()
@@ -66,9 +79,26 @@ public class PlayingBoard : SnekMonoBehaviour
         _background.color = _themeManager.GetBackgroundColor();
     }
 
+    private void OnRoundFinish(int[] winCombo, int lastPlayedCellIndex)
+    {
+        int end1CellIndex = winCombo[0];
+        int end2CellIndex = winCombo[2];
+
+        PlacementGridCellButton startCell = lastPlayedCellIndex == end2CellIndex ?
+            _cellButtons[end1CellIndex] : _cellButtons[end2CellIndex];
+
+        PlacementGridCellButton endCell = lastPlayedCellIndex == end2CellIndex ?
+            _cellButtons[end2CellIndex] : _cellButtons[end1CellIndex];
+
+        _vfxManager.PlayPlayerWinEffect(
+            startCell.GetWorldPosition(),
+            endCell.GetWorldPosition(),
+            OnPlayerWinEffectFinish);
+    }
+
     public void ResetAllCells()
     {
-        foreach (PlacementGridCellButton button in _buttons)
+        foreach (PlacementGridCellButton button in _cellButtons)
         {
             button.CellState = PlacementGridCellState.None;
             button.SetSymbolSprite(null);
@@ -103,6 +133,11 @@ public class PlayingBoard : SnekMonoBehaviour
         button.EnableInteraction(false);
 
         _roundManager.EndTurn(button.CellIndex, button.CellState);
+    }
+
+    private void OnPlayerWinEffectFinish()
+    {
+        _popupManager.ShowPopup<RoundFinishedPopup>(true);
     }
 }
 

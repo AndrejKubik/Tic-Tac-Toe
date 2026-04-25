@@ -6,13 +6,14 @@ using UnityEngine;
 [UseSnekInspector]
 public class GameRoundManager : SnekMonoSingleton
 {
-    private UIPopupManager _popupManager;
     private StatsManager _statsManager;
 
     private PlayerInstance _firstTurn = PlayerInstance.Player1;
 
     private PlayerInstance _currentTurn;
     private RoundData _currentRoundData;
+    private int[] _currentWinCombo = null;
+    private int _lastPlayedCellIndex = -1;
 
     public bool IsRoundInProgress { get; private set; }
 
@@ -38,19 +39,15 @@ public class GameRoundManager : SnekMonoSingleton
     public event Action OnNewRoundStarted;
     public event Action<float> OnElapsedTimeUpdated;
     public event Action<PlayerInstance, int> OnPlayerMovesUpdated;
-    public event Action<RoundData> OnRoundFinished;
+    public event Action<int[], int> OnRoundFinished;
 
     protected override void Initialize()
     {
-        _popupManager = SnekSingletonManager.GetSingleton<UIPopupManager>();
         _statsManager = SnekSingletonManager.GetSingleton<StatsManager>();
     }
 
     protected override void Validate()
     {
-        if (!_popupManager)
-            FailValidation("Cannot find UI Popup Manager singleton.");
-
         if (!_statsManager)
             FailValidation("Cannot find Stats Manager singleton.");
     }
@@ -94,6 +91,7 @@ public class GameRoundManager : SnekMonoSingleton
 
         _currentTurn = _firstTurn;
         _playingBoardCells = new PlacementGridCellState[PlayingBoard.TotalCells];
+        _currentWinCombo = null;
 
         IsRoundInProgress = true;
 
@@ -115,12 +113,13 @@ public class GameRoundManager : SnekMonoSingleton
     public void EndTurn(int playedCellIndex, PlacementGridCellState playedCellState)
     {
         _playingBoardCells[playedCellIndex] = playedCellState;
+        _lastPlayedCellIndex = playedCellIndex;
 
         UpdatePlayerMovesCount();
 
         if (IsAnyWinComboAchieved(playedCellState))
             FinishRound(false);
-        else if (_currentRoundData.TotalMoves == 9)
+        else if (_currentRoundData.TotalMoves == PlayingBoard.TotalCells)
             FinishRound(true);
         else
             _currentTurn = GetNextPlayerTurn(_currentTurn);
@@ -148,7 +147,11 @@ public class GameRoundManager : SnekMonoSingleton
     {
         foreach (int[] winCombo in _cellWinCombos)
             if (IsWinComboAchieved(winCombo, playedCellState))
+            {
+                _currentWinCombo = winCombo;
+
                 return true;
+            }
 
         return false;
     }
@@ -173,8 +176,10 @@ public class GameRoundManager : SnekMonoSingleton
 
         ResolveRound(isDraw);
 
+        if (!isDraw)
+            OnRoundFinished?.Invoke(_currentWinCombo, _lastPlayedCellIndex);
+
         _statsManager.StoreRoundData(_currentRoundData);
-        _popupManager.ShowPopup<RoundFinishedPopup>(true);
     }
 
     private void ResolveRound(bool isDraw)

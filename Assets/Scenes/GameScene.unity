@@ -501,6 +501,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2553837828818098484, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
+      propertyPath: _playerWinEffect
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3268551757696346735, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -703,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5308057333441698882, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
       propertyPath: m_Name
-      value: PlayingField
+      value: PlayingBoard
       objectReference: {fileID: 0}
     - target: {fileID: 7433955964631253836, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -883,8 +887,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1982890479}
   - {fileID: 1663563322}
   - {fileID: 2070198376}
+  - {fileID: 1982890479}
   - {fileID: 3953206308862698454}
   - {fileID: 5004059558765295968}
