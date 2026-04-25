@@ -18,7 +18,7 @@ public class PlayingBoard : SnekMonoBehaviour
     private UIPopupManager _popupManager;
 
     private PlacementGridCellButton[] _cellButtons;
-    
+
     [SerializeField] private Image _background;
 
     protected override void Initialize()
@@ -81,6 +81,9 @@ public class PlayingBoard : SnekMonoBehaviour
 
     private void OnRoundFinish(int[] winCombo, int lastPlayedCellIndex)
     {
+        foreach (PlacementGridCellButton button in _cellButtons)
+            button.EnableInteraction(false);
+
         int end1CellIndex = winCombo[0];
         int end2CellIndex = winCombo[2];
 
@@ -126,7 +129,7 @@ public class PlayingBoard : SnekMonoBehaviour
             Debug.LogError(
                 $"Trying to place NONE on a cell outside of {nameof(ResetAllCells)}() method.\n" +
                 $"Aborting...");
-            
+
             return;
         }
 
