@@ -5,10 +5,11 @@ using TMPro;
 using UnityEngine;
 
 [UseSnekInspector]
-public class StatsPopup : UIPopup
+public class StatsPopup : UIPopupWithSFX
 {
     private StatsManager _statsManager;
 
+    [Space(10f)]
     [SerializeField] private SnekUIButtonWithSFX _closeButton;
 
     [Space(10f)]
@@ -27,6 +28,8 @@ public class StatsPopup : UIPopup
 
     protected override void Validate()
     {
+        base.Validate();
+
         if (!_closeButton)
             FailValidation("Cancel Button not assigned.");
 
@@ -39,8 +42,10 @@ public class StatsPopup : UIPopup
         _closeButton.SetExternalCallback(ClosePopup);
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         _gamesPlayedCount.text = _statsManager.GetGamesPlayedCount().ToString();
         _player1WinsCount.text = _statsManager.GetGamesWithResult(RoundResult.Player1Win).ToString();
         _player2WinsCount.text = _statsManager.GetGamesWithResult(RoundResult.Player2Win).ToString();

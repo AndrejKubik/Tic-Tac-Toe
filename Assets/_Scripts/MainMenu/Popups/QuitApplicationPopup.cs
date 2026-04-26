@@ -4,7 +4,7 @@ using Snek.Utilities;
 using UnityEngine;
 
 [UseSnekInspector]
-public class QuitApplicationPopup : UIPopup
+public class QuitApplicationPopup : UIPopupWithSFX
 {
     private GameManager _gameManager;
 
@@ -21,6 +21,8 @@ public class QuitApplicationPopup : UIPopup
 
     protected override void Validate()
     {
+        base.Validate();
+
         if (!_gameManager)
             FailValidation("Cannot find Game Manager singleton.");
 

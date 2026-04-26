@@ -5,11 +5,12 @@ using TMPro;
 using UnityEngine;
 
 [UseSnekInspector]
-public class RoundFinishedPopup : UIPopup
+public class RoundFinishedPopup : UIPopupWithSFX
 {
     private GameManager _gameManager;
     private GameRoundManager _roundManager;
 
+    [Space(10f)]
     [SerializeField] private TextMeshProUGUI _message;
 
     [Space(10f)]
@@ -26,6 +27,8 @@ public class RoundFinishedPopup : UIPopup
 
     protected override void Validate()
     {
+        base.Validate();
+
         if (!_gameManager)
             FailValidation("Cannot find Game Manager singleton.");
 
@@ -42,8 +45,10 @@ public class RoundFinishedPopup : UIPopup
             FailValidation("Cancel Button not assigned.");
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         RoundResult roundResult = _roundManager.GetCurrentRoundResult();
 
         _message.text = roundResult switch

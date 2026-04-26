@@ -715,6 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98c3b818c7904374fa08f781a64d3af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuitApplicationPopup
+  _showSound: {fileID: 8300000, guid: 991b67d36c21d3040a2fe8ec16ef6c01, type: 3}
   _quitButton: {fileID: 4067277286132721950}
   _cancelButton: {fileID: 8267529832345896890}
 --- !u!1 &6505430921423224122

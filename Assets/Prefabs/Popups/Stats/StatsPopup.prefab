@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbc7f3bea4f82442b5bd74fbd831ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatsPopup
+  _showSound: {fileID: 8300000, guid: 991b67d36c21d3040a2fe8ec16ef6c01, type: 3}
   _closeButton: {fileID: 8267529832345896890}
   _gamesPlayedCount: {fileID: 3458756158430176859}
   _player1WinsCount: {fileID: 7520349652134487419}
