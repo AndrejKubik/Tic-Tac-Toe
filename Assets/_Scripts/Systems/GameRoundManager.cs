@@ -59,12 +59,12 @@ public class GameRoundManager : SnekMonoSingleton
 
     protected override void OnInitializationSuccess()
     {
-        _gameManager.OnGameStarted += StartNewGame;
+        _gameManager.OnGameStarted += StartFirstRound;
     }
 
     private void OnDestroy()
     {
-        _gameManager.OnGameStarted -= StartNewGame;
+        _gameManager.OnGameStarted -= StartFirstRound;
     }
 
     private void Update()
@@ -80,7 +80,7 @@ public class GameRoundManager : SnekMonoSingleton
         OnElapsedTimeUpdated?.Invoke(_currentRoundData.ElapsedTime);
     }
 
-    private void StartNewGame()
+    private void StartFirstRound()
     {
         _currentRoundData = new RoundData()
         {
@@ -93,7 +93,7 @@ public class GameRoundManager : SnekMonoSingleton
         StartRound();
     }
 
-    public void StartNewRound()
+    public void StartNextRound()
     {
         _currentRoundData = new RoundData()
         {
@@ -137,10 +137,8 @@ public class GameRoundManager : SnekMonoSingleton
 
         UpdatePlayerMovesCount();
 
-        if (IsAnyWinComboAchieved(playedCellState))
-            FinishRound(false);
-        else if (_currentRoundData.TotalMoves == PlayingBoard.TotalCells)
-            FinishRound(true);
+        if (IsAnyWinComboAchieved(playedCellState) || IsEveryCellUsed())
+            FinishRound();
         else
             _currentTurn = GetNextPlayerTurn(_currentTurn);
     }
@@ -183,28 +181,32 @@ public class GameRoundManager : SnekMonoSingleton
             && _playingBoardCells[winCombo[2]] == playedCellState;
     }
 
+    private bool IsEveryCellUsed()
+    {
+        return _currentRoundData.TotalMoves == PlayingBoard.TotalCells;
+    }
+
     private PlayerInstance GetNextPlayerTurn(PlayerInstance playerTurn)
     {
         return playerTurn == PlayerInstance.Player1 ? PlayerInstance.Player2 : PlayerInstance.Player1;
     }
 
-    public void FinishRound(bool isDraw)
+    public void FinishRound()
     {
         IsRoundInProgress = false;
 
         _firstTurn = GetNextPlayerTurn(_firstTurn);
 
-        ResolveRound(isDraw);
+        ResolveRound();
 
-        if (!isDraw)
-            OnRoundFinished?.Invoke(_currentWinCombo, _lastPlayedCellIndex);
+        OnRoundFinished?.Invoke(_currentWinCombo, _lastPlayedCellIndex);
 
         _statsManager.StoreRoundData(_currentRoundData);
     }
 
-    private void ResolveRound(bool isDraw)
+    private void ResolveRound()
     {
-        if (isDraw)
+        if (_currentWinCombo == null)
             SetCurrentRoundResult(RoundResult.Draw);
         else if (_currentTurn == PlayerInstance.Player1)
             SetCurrentRoundResult(RoundResult.Player1Win);

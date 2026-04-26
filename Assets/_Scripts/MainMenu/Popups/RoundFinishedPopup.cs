@@ -63,7 +63,7 @@ public class RoundFinishedPopup : UIPopup
 
     private void OnRetryButtonClick()
     {
-        _roundManager.StartNewRound();
+        _roundManager.StartNextRound();
 
         ClosePopup();
     }

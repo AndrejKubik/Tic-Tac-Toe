@@ -109,6 +109,14 @@ public class PlayingBoard : SnekMonoBehaviour
         foreach (PlacementGridCellButton button in _cellButtons)
             button.EnableInteraction(false);
 
+        if (winCombo == null) // round finished as draw
+            _popupManager.ShowPopup<RoundFinishedPopup>(true);
+        else
+            PlayPlayerWinEffect(winCombo, lastPlayedCellIndex);
+    }
+
+    private void PlayPlayerWinEffect(int[] winCombo, int lastPlayedCellIndex)
+    {
         int end1CellIndex = winCombo[0];
         int end2CellIndex = winCombo[2];
 
