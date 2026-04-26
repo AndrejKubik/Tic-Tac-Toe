@@ -3,6 +3,7 @@ using Snek.PlayModeManager;
 using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 [UseSnekInspector]
 public class GameManager : SnekMonoSingleton
