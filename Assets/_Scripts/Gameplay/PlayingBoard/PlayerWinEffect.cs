@@ -13,6 +13,9 @@ public class PlayerWinEffect : SnekMonoBehaviour
     [Min(0.1f)]
     [SerializeField] private float _moveDuration = 1f;
 
+    private float _lineStartColorAlpha = 1f;
+    private float _lineEndColorAlpha = 1f;
+
     protected override void Validate()
     {
         if (!_particles)
@@ -20,6 +23,36 @@ public class PlayerWinEffect : SnekMonoBehaviour
 
         if (!_line)
             FailValidation("Line Renderer not assigned.");
+    }
+
+    protected override void OnInitializationSuccess()
+    {
+        _lineStartColorAlpha = _line.startColor.a;
+        _lineEndColorAlpha = _line.endColor.a;
+    }
+
+    public void SetColor(Color color)
+    {
+        SetParticleColor(color);
+        SetLineColor(color);
+    }
+
+    private void SetParticleColor(Color color)
+    {
+        ParticleSystem.MainModule particlesData = _particles.main;
+        particlesData.startColor = color;
+    }
+
+    private void SetLineColor(Color color)
+    {
+        Color startColor = color;
+        startColor.a = _lineStartColorAlpha;
+
+        Color endColor = color;
+        endColor.a = _lineEndColorAlpha;
+
+        _line.startColor = startColor;
+        _line.endColor = endColor;
     }
 
     public void Play(Vector3 startPosition, Vector3 endPosition, Action onFinishCallback = null)

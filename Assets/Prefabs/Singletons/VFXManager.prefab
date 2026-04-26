@@ -60,7 +60,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5089584358820914848, guid: 832811cb24dd8c44391212d0e83f3ffc, type: 3}
       propertyPath: m_Name
-      value: PlayerWinEffect2
+      value: PlayerWinEffect
       objectReference: {fileID: 0}
     - target: {fileID: 6626012455946493327, guid: 832811cb24dd8c44391212d0e83f3ffc, type: 3}
       propertyPath: m_LocalPosition.x

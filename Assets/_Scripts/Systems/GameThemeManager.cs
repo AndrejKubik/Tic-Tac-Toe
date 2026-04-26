@@ -26,4 +26,19 @@ public class GameThemeManager : SnekMonoSingleton
     {
         return _selectedTheme.SymbolO;
     }
+
+    public Color GetGridColor()
+    {
+        return _selectedTheme.GridColor;
+    }
+
+    public Color GetSymbolXColor()
+    {
+        return _selectedTheme.SymbolXColor;
+    }
+
+    public Color GetSymbolOColor()
+    {
+        return _selectedTheme.SymbolOColor;
+    }
 }

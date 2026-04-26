@@ -8,17 +8,19 @@ using UnityEngine.UI;
 public class PlacementGridCellButton : SnekUIButtonWithSFX
 {
     private RectTransform _rectTransform;
+    private Image _image;
 
     [SerializeField] private Image _symbol;
 
     public int CellIndex;
-    public PlacementGridCellState CellState = PlacementGridCellState.None;
+    public PlacementGridCellSymbol CellSymbol = PlacementGridCellSymbol.None;
 
     protected override void Initialize()
     {
         base.Initialize();
 
         _rectTransform = GetComponent<RectTransform>();
+        _image = GetComponent<Image>();
     }
 
     protected override void Validate()
@@ -27,6 +29,9 @@ public class PlacementGridCellButton : SnekUIButtonWithSFX
 
         if (!_rectTransform)
             FailValidation("Cannot find Rect Transform component.");
+
+        if (!_image)
+            FailValidation("Cannot find Image component.");
 
         if (!_symbol)
             FailValidation("Symbol Image component not assigned.");
@@ -38,6 +43,11 @@ public class PlacementGridCellButton : SnekUIButtonWithSFX
 
         _symbol.color = sprite == null ?
             Color.clear : Color.white;
+    }
+
+    public void SetBorderColor(Color color)
+    {
+        _image.color = color;
     }
 
     public Vector3 GetWorldPosition()

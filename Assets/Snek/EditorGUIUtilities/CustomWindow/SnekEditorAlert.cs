@@ -73,9 +73,12 @@ namespace SnekEditor.GUIUtilities
             InitializeStyles();
 
             if (IsLeftOverAfterRecompile())
+            {
                 Close();
 
-            if (IsOldestAlert() && IsUserInputDetected() && focusedWindow != this)
+                return;
+            }
+            else if (IsOldestAlert() && IsUserInputDetected() && focusedWindow != this)
                 SnekEditorAlertManager.CloseAlert(this);
 
             DrawMessage();

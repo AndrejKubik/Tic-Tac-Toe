@@ -54,6 +54,7 @@ public class PlayingBoard : SnekMonoBehaviour
 
     protected override void OnInitializationSuccess()
     {
+        _roundManager.OnNewGameStarted += OnNewGameStart;
         _roundManager.OnNewRoundStarted += OnNewRoundStart;
         _roundManager.OnRoundFinished += OnRoundFinish;
 
@@ -68,8 +69,15 @@ public class PlayingBoard : SnekMonoBehaviour
 
     private void OnDestroy()
     {
+        _roundManager.OnNewGameStarted -= OnNewGameStart;
         _roundManager.OnNewRoundStarted -= OnNewRoundStart;
         _roundManager.OnRoundFinished -= OnRoundFinish;
+    }
+
+    private void OnNewGameStart()
+    {
+        foreach (PlacementGridCellButton button in _cellButtons)
+            button.SetBorderColor(_themeManager.GetGridColor());
     }
 
     private void OnNewRoundStart()
@@ -96,6 +104,7 @@ public class PlayingBoard : SnekMonoBehaviour
         _vfxManager.PlayPlayerWinEffect(
             startCell.GetWorldPosition(),
             endCell.GetWorldPosition(),
+            _cellButtons[lastPlayedCellIndex].CellSymbol,
             OnPlayerWinEffectFinish);
     }
 
@@ -103,7 +112,7 @@ public class PlayingBoard : SnekMonoBehaviour
     {
         foreach (PlacementGridCellButton button in _cellButtons)
         {
-            button.CellState = PlacementGridCellState.None;
+            button.CellSymbol = PlacementGridCellSymbol.None;
             button.SetSymbolSprite(null);
             button.EnableInteraction(true);
         }
@@ -111,17 +120,17 @@ public class PlayingBoard : SnekMonoBehaviour
 
     private void OnGridButtonClick(PlacementGridCellButton button)
     {
-        if (button.CellState != PlacementGridCellState.None)
+        if (button.CellSymbol != PlacementGridCellSymbol.None)
             return;
 
-        if (_roundManager.GetCurrentTurnSymbol() == PlacementGridCellState.X)
+        if (_roundManager.GetCurrentTurnSymbol() == PlacementGridCellSymbol.X)
         {
-            button.CellState = PlacementGridCellState.X;
+            button.CellSymbol = PlacementGridCellSymbol.X;
             button.SetSymbolSprite(_themeManager.GetSymbolX());
         }
-        else if (_roundManager.GetCurrentTurnSymbol() == PlacementGridCellState.O)
+        else if (_roundManager.GetCurrentTurnSymbol() == PlacementGridCellSymbol.O)
         {
-            button.CellState = PlacementGridCellState.O;
+            button.CellSymbol = PlacementGridCellSymbol.O;
             button.SetSymbolSprite(_themeManager.GetSymbolO());
         }
         else
@@ -135,7 +144,7 @@ public class PlayingBoard : SnekMonoBehaviour
 
         button.EnableInteraction(false);
 
-        _roundManager.EndTurn(button.CellIndex, button.CellState);
+        _roundManager.EndTurn(button.CellIndex, button.CellSymbol);
     }
 
     private void OnPlayerWinEffectFinish()

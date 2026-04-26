@@ -1048,6 +1048,50 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -4480292283693890404, guid: 67a0f4592f14e5b4da6d94d9498576b0, type: 3}
     - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.GridColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.GridColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.GridColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.GridColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolOColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolOColor.b
+      value: 0.049504936
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolOColor.g
+      value: 0.9554455
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolOColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.g
+      value: 0.79591846
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
       propertyPath: _theme.BackgroundColor.b
       value: 0.2
       objectReference: {fileID: 0}
@@ -1193,6 +1237,42 @@ PrefabInstance:
       propertyPath: _theme.SymbolX
       value: 
       objectReference: {fileID: 1124370546115290667, guid: 67a0f4592f14e5b4da6d94d9498576b0, type: 3}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.GridColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolOColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolOColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolOColor.g
+      value: 0.402
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolOColor.r
+      value: 0.5620283
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.b
+      value: 0.36798382
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.g
+      value: 0.70199996
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.r
+      value: 0.11322577
+      objectReference: {fileID: 0}
     - target: {fileID: 8815159246256987770, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1298,6 +1378,30 @@ PrefabInstance:
     - target: {fileID: 4653953987214181986, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
       propertyPath: m_Name
       value: Theme1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.GridColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolOColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.b
+      value: 0.09789959
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.g
+      value: 0.09789959
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593620138817396455, guid: 97e659ec642aafb46bf270fcb5490f8b, type: 3}
+      propertyPath: _theme.SymbolXColor.r
+      value: 0.8301887
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
