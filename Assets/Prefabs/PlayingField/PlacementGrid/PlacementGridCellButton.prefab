@@ -134,11 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa182ac4ded6f5b48a24b72bb29882b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlacementGridButton
-  _buttonSFX: {fileID: 8300000, guid: 109bb9a335ad88a47b40d91cad0ce70d, type: 3}
+  _buttonSFX: {fileID: 8300000, guid: bcb0a8546502aa249b71fd8902219d59, type: 3}
   _useUnmutableAudioSource: 0
   _symbol: {fileID: 2878252763278997898}
   CellIndex: 0
-  CellState: 0
+  CellSymbol: 0
 --- !u!1001 &2197312807432062829
 PrefabInstance:
   m_ObjectHideFlags: 0
