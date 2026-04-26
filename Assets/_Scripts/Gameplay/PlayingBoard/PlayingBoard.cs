@@ -1,4 +1,5 @@
 using System;
+using Snek.AudioManager;
 using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
@@ -15,20 +16,25 @@ public class PlayingBoard : SnekMonoBehaviour
     private GameManager _gameManager;
     private GameRoundManager _roundManager;
     private GameThemeManager _themeManager;
-    private VFXManager _vfxManager;
     private UIPopupManager _popupManager;
+    private VFXManager _vfxManager;
+    private SnekSFXManager _sfxManager;
 
     private PlacementGridCellButton[] _cellButtons;
 
     [SerializeField] private Image _background;
+
+    [Space(10f)]
+    [SerializeField] private AudioClip _playerWinSound;
 
     protected override void Initialize()
     {
         _gameManager = SnekSingletonManager.GetSingleton<GameManager>();
         _roundManager = SnekSingletonManager.GetSingleton<GameRoundManager>();
         _themeManager = SnekSingletonManager.GetSingleton<GameThemeManager>();
-        _vfxManager = SnekSingletonManager.GetSingleton<VFXManager>();
         _popupManager = SnekSingletonManager.GetSingleton<UIPopupManager>();
+        _vfxManager = SnekSingletonManager.GetSingleton<VFXManager>();
+        _sfxManager = SnekSingletonManager.GetSingleton<SnekSFXManager>();
 
         _cellButtons = GetComponentsInChildren<PlacementGridCellButton>(true);
     }
@@ -44,17 +50,23 @@ public class PlayingBoard : SnekMonoBehaviour
         if (!_themeManager)
             FailValidation("Cannot find Game Theme Manager singleton.");
 
+        if (!_popupManager)
+            FailValidation("Cannot find UI Popup Manager singleton.");
+
         if (!_vfxManager)
             FailValidation("Cannot find VFX Manager singleton.");
 
-        if (!_popupManager)
-            FailValidation("Cannot find UI Popup Manager singleton.");
+        if (!_sfxManager)
+            FailValidation("Cannot find Snek SFX Manager singleton.");
 
         if (_cellButtons == null || _cellButtons.Length != TotalCells)
             FailValidation($"Number of found placement grid buttons is invalid, must be [{TotalCells}].");
 
         if (!_background)
             FailValidation("Background image not assigned.");
+
+        if (!_playerWinSound)
+            FailValidation("Player win sound not assigned.");
     }
 
     protected override void OnInitializationSuccess()
@@ -111,6 +123,8 @@ public class PlayingBoard : SnekMonoBehaviour
             endCell.GetWorldPosition(),
             _cellButtons[lastPlayedCellIndex].CellSymbol,
             OnPlayerWinEffectFinish);
+
+        _sfxManager.PlaySound(_playerWinSound);
     }
 
     public void ResetAllCells()

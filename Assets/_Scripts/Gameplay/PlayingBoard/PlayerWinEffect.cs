@@ -12,6 +12,7 @@ public class PlayerWinEffect : SnekMonoBehaviour
     [Space(10f)]
     [Min(0.1f)]
     [SerializeField] private float _moveDuration = 1f;
+    [SerializeField] private AnimationCurve _moveCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     private float _lineStartColorAlpha = 1f;
     private float _lineEndColorAlpha = 1f;
@@ -23,6 +24,9 @@ public class PlayerWinEffect : SnekMonoBehaviour
 
         if (!_line)
             FailValidation("Line Renderer not assigned.");
+
+        if (_moveCurve == null || _moveCurve.length < 1)
+            FailValidation("Move curve data is invalid.");
     }
 
     protected override void OnInitializationSuccess()
@@ -70,14 +74,14 @@ public class PlayerWinEffect : SnekMonoBehaviour
         _line.gameObject.SetActive(true);
         _particles.gameObject.SetActive(true);
 
-        float t = 0f;
         float elapsedTime = 0f;
 
         while (elapsedTime < _moveDuration)
         {
-            t = elapsedTime / _moveDuration;
+            float t = elapsedTime / _moveDuration;
+            float tCurved = _moveCurve.Evaluate(t);
 
-            Vector3 currentPosition = Vector3.Lerp(startPosition, endPosition, t);
+            Vector3 currentPosition = Vector3.Lerp(startPosition, endPosition, tCurved);
             
             _particles.transform.position = currentPosition;
             _line.SetPosition(1, currentPosition);

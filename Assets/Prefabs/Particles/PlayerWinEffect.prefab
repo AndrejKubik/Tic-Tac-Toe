@@ -5026,4 +5026,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWinEffect
   _particles: {fileID: 2156552917565905588}
   _line: {fileID: 3305830801175609573}
-  _moveDuration: 0.25
+  _moveDuration: 0.35
+  _moveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.009693878
+      outSlope: 0.009693878
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.7368421
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 3.2984483
+      outSlope: 3.2984483
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.031039119
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
