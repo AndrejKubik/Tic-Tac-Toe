@@ -1,13 +1,16 @@
+using System;
 using Snek.PlayModeManager;
 using Snek.SingletonManager;
 using Snek.Utilities;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [UseSnekInspector]
 public class GameManager : SnekMonoSingleton
 {
     private GameRoundManager _roundManager;
+
+    public event Action OnGameStarted;
+    public event Action OnReturnedToMainMenu;
 
     public string MainMenuSceneName;
     public string GameSceneName;
@@ -29,18 +32,27 @@ public class GameManager : SnekMonoSingleton
             FailValidation("Main menu scene not assigned.");
     }
 
+    protected override void OnInitializationSuccess()
+    {
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+    }
+
     public void StartGame()
     {
-        SceneManager.sceneLoaded += OnGameplaySceneLoaded;
-
         SceneManager.LoadScene(GameSceneName);
     }
 
-    private void OnGameplaySceneLoaded(Scene scene, LoadSceneMode loadMode)
+    private void OnSceneLoad(Scene scene, LoadSceneMode loadMode)
     {
-        SceneManager.sceneLoaded -= OnGameplaySceneLoaded;
-
-        _roundManager.StartRound(true);
+        if (scene.name == MainMenuSceneName)
+            OnReturnedToMainMenu?.Invoke();
+        else if (scene.name == GameSceneName)
+            OnGameStarted?.Invoke();
     }
 
     public void ReturnToMainMenu()

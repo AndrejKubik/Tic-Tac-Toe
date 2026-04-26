@@ -34,14 +34,14 @@ public class RoundStats : SnekMonoBehaviour
 
     protected override void OnInitializationSuccess()
     {
-        _roundManager.OnNewRoundStarted += OnNewRoundStart;
+        _roundManager.OnRoundStarted += OnNewRoundStart;
         _roundManager.OnElapsedTimeUpdated += OnRoundElapsedTimeUpdate;
         _roundManager.OnPlayerMovesUpdated += OnPlayerMovesUpdate;
     }
 
     private void OnDestroy()
     {
-        _roundManager.OnNewRoundStarted -= OnNewRoundStart;
+        _roundManager.OnRoundStarted -= OnNewRoundStart;
         _roundManager.OnElapsedTimeUpdated -= OnRoundElapsedTimeUpdate;
         _roundManager.OnPlayerMovesUpdated -= OnPlayerMovesUpdate;
     }

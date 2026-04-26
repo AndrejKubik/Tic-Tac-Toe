@@ -6,6 +6,7 @@ using UnityEngine;
 [UseSnekInspector]
 public class GameRoundManager : SnekMonoSingleton
 {
+    private GameManager _gameManager;
     private StatsManager _statsManager;
 
     private PlayerInstance _firstTurn = PlayerInstance.Player1;
@@ -36,21 +37,34 @@ public class GameRoundManager : SnekMonoSingleton
 
     private PlacementGridCellSymbol[] _playingBoardCells;
 
-    public event Action OnNewGameStarted;
-    public event Action OnNewRoundStarted;
+    public event Action OnRoundStarted;
     public event Action<float> OnElapsedTimeUpdated;
     public event Action<PlayerInstance, int> OnPlayerMovesUpdated;
     public event Action<int[], int> OnRoundFinished;
 
     protected override void Initialize()
     {
+        _gameManager = SnekSingletonManager.GetSingleton<GameManager>();
         _statsManager = SnekSingletonManager.GetSingleton<StatsManager>();
     }
 
     protected override void Validate()
     {
+        if (!_gameManager)
+            FailValidation("Cannot find Game Manager singleton.");
+
         if (!_statsManager)
             FailValidation("Cannot find Stats Manager singleton.");
+    }
+
+    protected override void OnInitializationSuccess()
+    {
+        _gameManager.OnGameStarted += StartNewGame;
+    }
+
+    private void OnDestroy()
+    {
+        _gameManager.OnGameStarted -= StartNewGame;
     }
 
     private void Update()
@@ -66,31 +80,34 @@ public class GameRoundManager : SnekMonoSingleton
         OnElapsedTimeUpdated?.Invoke(_currentRoundData.ElapsedTime);
     }
 
-    public void StartRound(bool isNewGame)
+    private void StartNewGame()
     {
-        PlacementGridCellSymbol player1Symbol;
-        PlacementGridCellSymbol player2Symbol;
-
-        if (isNewGame)
-        {
-            OnNewGameStarted?.Invoke();
-
-            player1Symbol = PlacementGridCellSymbol.X;
-            player2Symbol = PlacementGridCellSymbol.O;
-        }
-        else
-        {
-            player1Symbol = SwitchSymbol(GetCurrentRoundPlayer1Symbol());
-            player2Symbol = SwitchSymbol(GetCurrentRoundPlayer2Symbol());
-        }
-
         _currentRoundData = new RoundData()
         {
-            ElapsedTime = 0f,
-            TotalMoves = 0,
-            Player1Symbol = player1Symbol,
-            Player2Symbol = player2Symbol
+            Player1Symbol = PlacementGridCellSymbol.X,
+            Player2Symbol = PlacementGridCellSymbol.O
         };
+
+        _firstTurn = PlayerInstance.Player1;
+
+        StartRound();
+    }
+
+    public void StartNewRound()
+    {
+        _currentRoundData = new RoundData()
+        {
+            Player1Symbol = SwitchSymbol(GetCurrentRoundPlayer1Symbol()),
+            Player2Symbol = SwitchSymbol(GetCurrentRoundPlayer2Symbol())
+        };
+
+        StartRound();
+    }
+
+    private void StartRound()
+    {
+        _currentRoundData.ElapsedTime = 0f;
+        _currentRoundData.TotalMoves = 0;
 
         _currentTurn = _firstTurn;
         _playingBoardCells = new PlacementGridCellSymbol[PlayingBoard.TotalCells];
@@ -98,7 +115,7 @@ public class GameRoundManager : SnekMonoSingleton
 
         IsRoundInProgress = true;
 
-        OnNewRoundStarted?.Invoke();
+        OnRoundStarted?.Invoke();
     }
 
     private PlacementGridCellSymbol SwitchSymbol(PlacementGridCellSymbol currentSymbol)

@@ -6,6 +6,7 @@ using UnityEngine;
 [UseSnekInspector]
 public class VFXManager : SnekMonoSingleton
 {
+    private GameManager _gameManager;
     private GameRoundManager _roundManager;
     private GameThemeManager _themeManager;
 
@@ -13,12 +14,16 @@ public class VFXManager : SnekMonoSingleton
 
     protected override void Initialize()
     {
+        _gameManager = SnekSingletonManager.GetSingleton<GameManager>();
         _roundManager = SnekSingletonManager.GetSingleton<GameRoundManager>();
         _themeManager = SnekSingletonManager.GetSingleton<GameThemeManager>();
     }
 
     protected override void Validate()
     {
+        if (!_gameManager)
+            FailValidation("Cannot find Game Manager singleton.");
+
         if (!_roundManager)
             FailValidation("Cannot find Game Round Manager singleton.");
 
@@ -31,17 +36,14 @@ public class VFXManager : SnekMonoSingleton
 
     protected override void OnInitializationSuccess()
     {
-        _roundManager.OnNewRoundStarted += OnNewRoundStart; 
+        _gameManager.OnReturnedToMainMenu += HidePlayerWinEffect; 
+        _roundManager.OnRoundStarted += HidePlayerWinEffect; 
     }
 
     private void OnDestroy()
     {
-        _roundManager.OnNewRoundStarted -= OnNewRoundStart;
-    }
-
-    private void OnNewRoundStart()
-    {
-        _playerWinEffect.Stop();
+        _gameManager.OnReturnedToMainMenu -= HidePlayerWinEffect;
+        _roundManager.OnRoundStarted -= HidePlayerWinEffect;
     }
 
     public void PlayPlayerWinEffect(
@@ -60,6 +62,11 @@ public class VFXManager : SnekMonoSingleton
         //_playerWinEffect.SetColor(GetPlayerWinEffectColor(winSymbol));
         _playerWinEffect.SetColor(Color.orangeRed);
         _playerWinEffect.Play(startPosition, endPosition, onFinishCallback);
+    }
+
+    private void HidePlayerWinEffect()
+    {
+        _playerWinEffect.Stop();
     }
 
     private Color GetPlayerWinEffectColor(PlacementGridCellSymbol winSymbol)

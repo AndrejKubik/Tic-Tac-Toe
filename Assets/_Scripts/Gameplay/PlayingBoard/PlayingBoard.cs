@@ -12,6 +12,7 @@ public class PlayingBoard : SnekMonoBehaviour
 
     public const int TotalCells = Rows * Columns;
 
+    private GameManager _gameManager;
     private GameRoundManager _roundManager;
     private GameThemeManager _themeManager;
     private VFXManager _vfxManager;
@@ -23,6 +24,7 @@ public class PlayingBoard : SnekMonoBehaviour
 
     protected override void Initialize()
     {
+        _gameManager = SnekSingletonManager.GetSingleton<GameManager>();
         _roundManager = SnekSingletonManager.GetSingleton<GameRoundManager>();
         _themeManager = SnekSingletonManager.GetSingleton<GameThemeManager>();
         _vfxManager = SnekSingletonManager.GetSingleton<VFXManager>();
@@ -33,6 +35,9 @@ public class PlayingBoard : SnekMonoBehaviour
 
     protected override void Validate()
     {
+        if (!_gameManager)
+            FailValidation("Cannot find Game Manager singleton.");
+
         if (!_roundManager)
             FailValidation("Cannot find Game Round Manager singleton.");
 
@@ -54,8 +59,8 @@ public class PlayingBoard : SnekMonoBehaviour
 
     protected override void OnInitializationSuccess()
     {
-        _roundManager.OnNewGameStarted += OnNewGameStart;
-        _roundManager.OnNewRoundStarted += OnNewRoundStart;
+        _gameManager.OnGameStarted += OnNewGameStart;
+        _roundManager.OnRoundStarted += OnNewRoundStart;
         _roundManager.OnRoundFinished += OnRoundFinish;
 
         for (int i = 0; i < _cellButtons.Length; i++)
@@ -69,8 +74,8 @@ public class PlayingBoard : SnekMonoBehaviour
 
     private void OnDestroy()
     {
-        _roundManager.OnNewGameStarted -= OnNewGameStart;
-        _roundManager.OnNewRoundStarted -= OnNewRoundStart;
+        _gameManager.OnGameStarted -= OnNewGameStart;
+        _roundManager.OnRoundStarted -= OnNewRoundStart;
         _roundManager.OnRoundFinished -= OnRoundFinish;
     }
 

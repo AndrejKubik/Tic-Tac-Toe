@@ -57,13 +57,13 @@ public class RoundFinishedPopup : UIPopup
 
     protected override void OnInitializationSuccess()
     {
-        _retryButton.SetExternalCallback(OnPlayButtonClick);
+        _retryButton.SetExternalCallback(OnRetryButtonClick);
         _exitButton.SetExternalCallback(OnExitButtonClick);
     }
 
-    private void OnPlayButtonClick()
+    private void OnRetryButtonClick()
     {
-        _roundManager.StartRound(false);
+        _roundManager.StartNewRound();
 
         ClosePopup();
     }
