@@ -5026,7 +5026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWinEffect
   _particles: {fileID: 2156552917565905588}
   _line: {fileID: 3305830801175609573}
-  _moveDuration: 0.35
+  _moveDuration: 0.2
   _moveCurve:
     serializedVersion: 2
     m_Curve:
@@ -5051,3 +5051,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _lineOvershootOffset: 0.25

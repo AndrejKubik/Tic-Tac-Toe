@@ -12,7 +12,11 @@ public class PlayerWinEffect : SnekMonoBehaviour
     [Space(10f)]
     [Min(0.1f)]
     [SerializeField] private float _moveDuration = 1f;
+
     [SerializeField] private AnimationCurve _moveCurve = AnimationCurve.Linear(0, 0, 1, 1);
+
+    [Min(0f)]
+    [SerializeField] private float _lineOvershootOffset = 0.15f;
 
     private float _lineStartColorAlpha = 1f;
     private float _lineEndColorAlpha = 1f;
@@ -66,6 +70,9 @@ public class PlayerWinEffect : SnekMonoBehaviour
 
     private IEnumerator PlayAnimation(Vector3 startPosition, Vector3 endPosition, Action onFinishCallback = null)
     {
+        startPosition = Vector3.LerpUnclamped(startPosition, endPosition, 0f - _lineOvershootOffset);
+        endPosition = Vector3.LerpUnclamped(startPosition, endPosition, 1f + _lineOvershootOffset);
+
         _line.positionCount = 2;
 
         _line.SetPosition(0, startPosition);
