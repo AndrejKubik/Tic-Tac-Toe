@@ -12,8 +12,6 @@ public static class WebGLFileSystem
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
         SyncFiles();
-#else
-        Debug.Log("WebGL sync skipped (not WebGL build)");
 #endif
     }
 }

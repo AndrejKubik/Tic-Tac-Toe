@@ -65,8 +65,6 @@ public class GameManager : SnekMonoSingleton
     {
 #if UNITY_EDITOR
         SnekPlayModeManagerRuntime.RequestPlayModeExit();
-#elif UNITY_WEBGL
-        Application.OpenURL(Application.absoluteURL);
 #else
         Application.Quit();
 #endif

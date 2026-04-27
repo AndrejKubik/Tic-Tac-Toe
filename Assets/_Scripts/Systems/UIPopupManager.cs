@@ -1,20 +1,37 @@
+using System;
 using System.Collections.Generic;
 using Snek.SingletonManager;
 using Snek.Utilities;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.SceneManagement;
 
 [UseSnekInspector]
 public class UIPopupManager : SnekMonoSingleton
 {
+    private GameManager _gameManager;
+
     [SerializeField] private List<UIPopup> _popupPrefabs = new List<UIPopup>();
     [SerializeField] private Transform _popupSpawner;
+    [SerializeField] private GameObject _backgroundDim;
 
     private readonly List<UIPopup> _popups = new List<UIPopup>();
 
+    protected override void Initialize()
+    {
+        _gameManager = SnekSingletonManager.GetSingleton<GameManager>();
+    }
+
     protected override void Validate()
     {
+        if (!_gameManager)
+            FailValidation("Cannot find Game Manager singleton.");
+
         if (!_popupSpawner)
             FailValidation("Popup Spawner transform not assigned.");
+
+        if (!_backgroundDim)
+            FailValidation("Background dim game object not assigned.");
 
         if (IsAnyPrefabReferenceMissing())
             FailValidation("Found missing references in popup prefabs list.");
@@ -34,6 +51,18 @@ public class UIPopupManager : SnekMonoSingleton
         }
 
         Destroy(_popupSpawner.gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+    }
+
+    private void OnSceneLoad(Scene arg0, LoadSceneMode arg1)
+    {
+        _backgroundDim.SetActive(false);
     }
 
     private bool IsAnyPrefabReferenceMissing()
@@ -55,6 +84,8 @@ public class UIPopupManager : SnekMonoSingleton
             {
                 targetPopup.gameObject.SetActive(newState);
 
+                _backgroundDim.SetActive(newState);
+
                 return;
             }
 
@@ -69,7 +100,11 @@ public class UIPopupManager : SnekMonoSingleton
     public void ShowPopup(UIPopup popup, bool newState)
     {
         if(popup)
+        {
             popup.gameObject.SetActive(newState);
+
+            _backgroundDim.SetActive(newState);
+        }
         else
             Debug.LogError(
                 $"Close popup failed.\n" +
