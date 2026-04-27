@@ -19,10 +19,13 @@ public class PlayingBoard : SnekMonoBehaviour
     private UIPopupManager _popupManager;
     private VFXManager _vfxManager;
     private SnekSFXManager _sfxManager;
+    private ScreenLayoutManager _screenLayoutManager;
 
     private PlacementGridCellButton[] _cellButtons;
 
     [SerializeField] private Image _background;
+    [SerializeField] private PlacementGrid _placementGrid;
+    [SerializeField] private float _placementGridPadding = 60f;
 
     [Space(10f)]
     [SerializeField] private AudioClip _playerWinSound;
@@ -35,6 +38,7 @@ public class PlayingBoard : SnekMonoBehaviour
         _popupManager = SnekSingletonManager.GetSingleton<UIPopupManager>();
         _vfxManager = SnekSingletonManager.GetSingleton<VFXManager>();
         _sfxManager = SnekSingletonManager.GetSingleton<SnekSFXManager>();
+        _screenLayoutManager = SnekSingletonManager.GetSingleton<ScreenLayoutManager>();
 
         _cellButtons = GetComponentsInChildren<PlacementGridCellButton>(true);
     }
@@ -59,11 +63,17 @@ public class PlayingBoard : SnekMonoBehaviour
         if (!_sfxManager)
             FailValidation("Cannot find Snek SFX Manager singleton.");
 
+        if (!_screenLayoutManager)
+            FailValidation("Cannot find Screen Layout Manager singleton.");
+
         if (_cellButtons == null || _cellButtons.Length != TotalCells)
             FailValidation($"Number of found placement grid buttons is invalid, must be [{TotalCells}].");
 
         if (!_background)
             FailValidation("Background image not assigned.");
+
+        if (!_placementGrid)
+            FailValidation("Placement grid not assigned.");
 
         if (!_playerWinSound)
             FailValidation("Player win sound not assigned.");
@@ -74,14 +84,9 @@ public class PlayingBoard : SnekMonoBehaviour
         _gameManager.OnGameStarted += OnNewGameStart;
         _roundManager.OnRoundStarted += OnNewRoundStart;
         _roundManager.OnRoundFinished += OnRoundFinish;
+        _screenLayoutManager.OnScreenChanged += FitIntoScreen;
 
-        for (int i = 0; i < _cellButtons.Length; i++)
-        {
-            PlacementGridCellButton button = _cellButtons[i];
-
-            button.CellIndex = i;
-            button.SetExternalCallback(OnGridButtonClick, button);
-        }
+        InitializeGridCells();
     }
 
     private void OnDestroy()
@@ -89,6 +94,34 @@ public class PlayingBoard : SnekMonoBehaviour
         _gameManager.OnGameStarted -= OnNewGameStart;
         _roundManager.OnRoundStarted -= OnNewRoundStart;
         _roundManager.OnRoundFinished -= OnRoundFinish;
+        _screenLayoutManager.OnScreenChanged -= FitIntoScreen;
+    }
+
+    private void InitializeGridCells()
+    {
+        for (int i = 0; i < _cellButtons.Length; i++)
+        {
+            PlacementGridCellButton button = _cellButtons[i];
+
+            button.CellIndex = i;
+            button.SetExternalCallback(OnGridButtonClick, button);
+        }
+
+        FitIntoScreen(_screenLayoutManager.GetCurrentOrientation());
+    }
+
+    private void FitIntoScreen(ScreenOrientation screenOrientation)
+    {
+        Rect gridRect = _placementGrid.GetRect();
+
+        float availableSpace = screenOrientation == ScreenOrientation.Landscape ?
+            gridRect.height : gridRect.width;
+
+        availableSpace -= _placementGridPadding * 2f;
+
+        float targetCellSize = availableSpace / 3;
+
+        _placementGrid.cellSize = Vector2.one * targetCellSize;
     }
 
     private void OnNewGameStart()
@@ -179,4 +212,3 @@ public class PlayingBoard : SnekMonoBehaviour
         _popupManager.ShowPopup<RoundFinishedPopup>(true);
     }
 }
-
