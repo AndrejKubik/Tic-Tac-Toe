@@ -518,6 +518,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 835546625151824755, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.8611109
+      objectReference: {fileID: 0}
+    - target: {fileID: 835546625151824755, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 835546625151824755, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1647098858753057850, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
       propertyPath: m_Camera
       value: 
@@ -674,6 +686,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4443311982980677180, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4648751362418049022, guid: 104242df88953e5458709c2d6d0d94e1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -802,18 +818,6 @@ PrefabInstance:
     - target: {fileID: 2054569528854357873, guid: e3b0f32dc3e08c74b84bb958b3201508, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2310694524467896586, guid: e3b0f32dc3e08c74b84bb958b3201508, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2310694524467896586, guid: e3b0f32dc3e08c74b84bb958b3201508, type: 3}
-      propertyPath: m_PhysicalUnit
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2310694524467896586, guid: e3b0f32dc3e08c74b84bb958b3201508, type: 3}
-      propertyPath: m_MatchWidthOrHeight
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2998738765984052861, guid: e3b0f32dc3e08c74b84bb958b3201508, type: 3}
       propertyPath: m_AnchorMax.y
